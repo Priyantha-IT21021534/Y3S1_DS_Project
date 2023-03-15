@@ -1,10 +1,9 @@
 import React from "react";
+import Frame from "./components/Frame";
 
 const App = () => {
   return (
-    <div>
-      hello world
-    </div>
+    <Frame />
   );
 }
 export default App;
