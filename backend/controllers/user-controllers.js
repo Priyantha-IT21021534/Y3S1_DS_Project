@@ -6,13 +6,13 @@ const bcrypt = require("bcryptjs");
 //importing jsonwebtoken
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET_KEY = "mykey";
 
 const signUp = async(req, res, next) =>{
 
     const {name,  mobile, email,  address, password} = req.body;
     //chaecking whether user already sign up or not based on the mobile No
     let existingUser;
+
 
     try{
         existingUser = await User.findOne({email:email});
@@ -24,6 +24,8 @@ const signUp = async(req, res, next) =>{
         return res.status(400).json({message:"User already exist...login instead "})
     }
 
+    
+
     //hashsync is a function that can hasing the password
     const hashedpassword = bcrypt.hashSync(password);
 
@@ -33,6 +35,8 @@ const signUp = async(req, res, next) =>{
         email,
         address,
         password:hashedpassword
+       // roles:roles || "buyer" 
+        //"roles":[{"role":"buyer", "db":"DS_Project"}]
     });
 
     try{
@@ -70,11 +74,16 @@ const login = async(req, res, next) => {
 
        //sign is a function that can genarate the token
        //this token contains the id of the user and that id is encrypted
-    const token =jwt.sign({id: existingUser._id}, JWT_SECRET_KEY, {
+    const token =jwt.sign({id: existingUser._id}, process.env.JWT_SECRET_KEY, {
 
-        expiresIn:"30s"//after this time token will expire
+        expiresIn:"35s"//after this time token will expire
 
     });
+
+    console.log("Generated Token\n", token);
+    if (req.cookies[`${existingUser._id}`]) {
+        req.cookies[`${existingUser._id}`] = "";
+      }
 
     res.cookie(String(existingUser._id), token, {
         path:"/", 
@@ -84,7 +93,7 @@ const login = async(req, res, next) => {
     });
 
      //we send this msg along with he token and user details
-    return res.status(400).json({message:"Successfully logged in", User:existingUser, token})
+    return res.status(200).json({message:"Successfully logged in", User:existingUser, token})
 
 }
 
@@ -97,7 +106,7 @@ const verifyToken = (req, res, next) =>{
     if(!token){
         res.status(404).json({message:"No token found"})
     }
-    jwt.verify(String(token), JWT_SECRET_KEY, (err, user)=>{
+    jwt.verify(String(token), process.env.JWT_SECRET_KEY, (err, user)=>{
         if(err){
            return res.status(404).json({message:"Invalid token"})
         }
@@ -124,7 +133,58 @@ const getUser = async(req, res, next) =>{
     return res.status(200).json({user});
 }
 
+
+const refreshToken = (req, res, next) => {
+    const cookies = req.headers.cookie;
+    const prevToken = cookies.split("=")[1];
+    if (!prevToken) {
+      return res.status(400).json({ message: "Couldn't find token" });
+    }
+    jwt.verify(String(prevToken), process.env.JWT_SECRET_KEY, (err, user) => {
+      if (err) {
+        console.log(err);
+        return res.status(403).json({ message: "Authentication failed" });
+      }
+      res.clearCookie(`${user.id}`);
+      req.cookies[`${user.id}`] = "";
+  
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+        expiresIn: "35s",
+      });
+      console.log("Regenerated Token\n", token);
+  
+      res.cookie(String(user.id), token, {
+        path: "/",
+        expires: new Date(Date.now() + 1000 * 30), // 30 seconds
+        httpOnly: true,
+        sameSite: "lax",
+      });
+  
+      req.id = user.id;
+      next();
+    });
+  };
+
+  const logout = (req, res, next) => {
+    const cookies = req.headers.cookie;
+    const prevToken = cookies.split("=")[1];
+    if (!prevToken) {
+      return res.status(400).json({ message: "Couldn't find token" });
+    }
+    jwt.verify(String(prevToken), process.env.JWT_SECRET_KEY, (err, user) => {
+      if (err) {
+        console.log(err);
+        return res.status(403).json({ message: "Authentication failed" });
+      }
+      res.clearCookie(`${user.id}`);
+      req.cookies[`${user.id}`] = "";
+      return res.status(200).json({ message: "Successfully Logged Out" });
+    });
+  };
+
 exports.login = login;
 exports.signUp = signUp;
 exports.verifyToken = verifyToken;
 exports.getUser = getUser;
+exports.refreshToken = refreshToken;
+exports.logout = logout;

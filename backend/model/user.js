@@ -24,7 +24,7 @@ const userSchema = new Schema({
 
     address:{
         type:String,
-        required:true
+        required:true,
     },
 
     password:{
@@ -32,6 +32,14 @@ const userSchema = new Schema({
         required:true,
         minlength:6
     }
+
+   /* roles:[{
+        type:String, 
+        enum:['seller', 'buyer'],
+        defualt:['buyer']
+    }]
+       
+    */
 
 })
 
