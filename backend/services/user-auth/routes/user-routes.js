@@ -8,8 +8,8 @@ const router = require("express").Router();
 
 router.post("/signUp", signUp);
 router.post("/login", login);
-router.get("/user", verifyToken, getUser);
-router.get("/users", verifyToken,allowIfLoggedin, grantAccess('readAny', 'profile'), getUsers);
+router.get("/user", verifyToken, allowIfLoggedin, getUser);
+router.get("/users", verifyToken, allowIfLoggedin, grantAccess('readAny', 'profile'), getUsers);
 router.put('/user/:id', verifyToken, allowIfLoggedin, grantAccess('updateAny', 'profile'), updateUser); 
 router.put('/Ownuser/:id', verifyToken, allowIfLoggedin, grantAccess('updateOwn', 'profile'), updateUser); 
 router.delete('/user/:id', verifyToken, allowIfLoggedin, grantAccess('deleteAny', 'profile'), deleteUser);

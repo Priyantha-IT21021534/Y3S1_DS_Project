@@ -101,7 +101,7 @@ const grantAccess = function(action, resource) {
      error: "You don't have enough permission to perform this action"
     });
    }
-   next()
+   next();
   } catch (error) {
    next(error)
   }
@@ -223,3 +223,5 @@ exports.grantAccess = grantAccess;
 exports.allowIfLoggedin = allowIfLoggedin;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
+
+
