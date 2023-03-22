@@ -13,27 +13,23 @@ const productSchema = new Schema({
   price: {
     type: Number,
     require: true
-  }
- /* bikeId: {
-    type: String,
-    // require: true
   },
-  date: {
-    type: String,
-    // required: true
+  weight: {
+    type: Number,
+    require: true
   },
-  start: {
-    type: String,
-    // required: true
-  },
-  end: {
-    type: String,
-    //    required: true
+  upload_date: {
+    type: Date,
+    required: true
   },
   description: {
     type: String,
-    // required: true
-  },*/
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  },
 });
 
 module.exports = mongoose.model("Products", productSchema);
