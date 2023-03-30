@@ -19,7 +19,7 @@ const signUp = async(req, res, next) =>{
      let existingUser;
 
      try{
-         existingUser = await User.findOne({email: email});
+         existingUser = await User.findOne({email: email}).maxTimeMS(30000);
      }catch(err){
          console.log(err);
      }
@@ -56,7 +56,7 @@ const login = async(req, res, next) =>{
     let loggeduser;
 
     try{
-        loggeduser = await User.findOne({email:email}) 
+        loggeduser = await User.findOne({email:email}).maxTimeMS(30000) 
     }catch(err){
         return new Error(err);
     }
@@ -75,13 +75,17 @@ const login = async(req, res, next) =>{
      //sign is a function that can genarate the token
     const token =jwt.sign({id: loggeduser._id}, JWT_SECRET_KEY, {
 
-        expiresIn:"60s"
+        expiresIn:"100s"
 
     });
 
+    
+
+
+
     res.cookie(String(loggeduser._id), token, {
         path:"/", 
-        expires: new Date(Date.now()+ 1000*60),
+        expires: new Date(Date.now()+ 1000*100),
         httpOnly:true, //if not provide http Only it will be accessible to the frontend
         sameSite:"lax",
     });
@@ -142,7 +146,9 @@ const verifyToken = async(req, res, next) =>{
         req.id= user.id;
        
     })
-    res.locals.loggedInUser = await User.findById(req.id);/////////
+    res.locals.loggedInUser = await User.findById(userId);/////////
+    
+    console.log(res.locals.loggedInUser)
     next();
 
 }

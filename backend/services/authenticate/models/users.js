@@ -38,16 +38,7 @@ const userSchema = new Schema({
         type: String,
         default: 'buyer',
         enum: ["buyer", "seller", "admin"]
-       },
-/*
-    role: {
-        type: String,
-        default: 'basic',
-        enum: ["basic", "supervisor", "admin"]
        }
-
-  */
-
 })
 
 const User = mongoose.model("User", userSchema)

@@ -36,3 +36,25 @@
     "role":"seller"
     
 }
+
+
+////
+{
+    "name":"Pasindu",
+    "mobile":774410856,
+    "email":"madushan34123@gmail.com",
+    "address":"asfd",
+    "password":"madushan34123",
+    "role":"seller"
+    
+}
+
+{
+    "name":"Pasindu",
+    "mobile":774410856,
+    "email":"pasindu@gmail.com",
+    "address":"asfd",
+    "password":"madushan34123",
+    "role":"seller"
+    
+}

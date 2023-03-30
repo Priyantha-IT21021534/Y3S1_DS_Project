@@ -100,3 +100,6 @@ const deleteProduct = async (req, res, next) => {
   exports.getById = getById;
   exports.updateProduct = updateProduct;
   exports.deleteProduct = deleteProduct;
+
+
+  
