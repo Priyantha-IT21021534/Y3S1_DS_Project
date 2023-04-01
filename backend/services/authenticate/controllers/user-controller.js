@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 
 
 const createToken = (_id) => {
-   return  jwt.sign({_id}, process.env.secret, {expiresIn: '60s'})
+   return  jwt.sign({_id}, process.env.SECRET, {expiresIn: '60s'})
 }
 
 const signUp = async(req, res, next) =>{
@@ -98,7 +98,7 @@ const login = async(req, res, next) =>{
      const token = createToken(loggeduser._id) 
 
      //we send this msg along with he token and user details
-    return res.status(400).json({message:"Successfully logged in", User:loggeduser, token})
+    return res.status(200).json({message:"Successfully logged in", User:loggeduser, token})
 
 }
 

@@ -7,7 +7,7 @@ const requireAccess  = require("../../authenticate/middleware")
 //const {onlySeller} = require("../../authenticate/middleware")
 router.use(requireAccess.requireAuth)
 
-router.post("/addProduct", requireAccess.onlySeller, productController.addProduct);
+router.post("/addProduct", requireAccess.requireAuth, requireAccess.onlySeller, productController.addProduct);
 //router.get("/getProducts", verifyToken, allowIfLoggedin, grantAccess('readAny', 'product'), productController.getAllProducts);
 //router.get("/getId/:id",productController.getById);
 //router.put("/updateProduct/:id",productController.updateProduct);
