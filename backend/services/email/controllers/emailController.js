@@ -26,6 +26,9 @@ exports.pingEmailServer = pingEmailServer;
 
 // Send email
 const sendMail = async (req, res, next) => {
+
+  const {to, subject, message} = req.body;
+
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -36,9 +39,9 @@ const sendMail = async (req, res, next) => {
   
   var mailOptions = {
     from: k.SERVICE_EMAIL,
-    to: 'kjpriyanthafdo@gmail.com',
-    subject: 'Sending Email using Node.js',
-    text: 'That was easy!'
+    to: to,
+    subject: subject,
+    text: message
   };
   
   transporter.sendMail(mailOptions, function(error, info){
