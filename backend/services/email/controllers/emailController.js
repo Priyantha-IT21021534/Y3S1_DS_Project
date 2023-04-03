@@ -52,7 +52,6 @@ const sendMail = async (req, res, next) => {
           message: "Authentication Failed!"
         });
       }else{
-        console.log('sdfsdf');
         return res.status(500).json(error);
       }
       
