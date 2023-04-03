@@ -66,30 +66,48 @@ const sendDummySms = async (req, res, next) => {
 
   const from = k.FROM;
 
-  async function sendSMS() {
-    var isError = k.SIMULATE_ERROR;
+  function invalidMobile(mobileNumber){
+    const regex = /^\d{11}$/;
+    return !regex.test(mobileNumber);
+  }
 
+  async function sendSMS() {
     var data = {
       "To": to,
       "From": from,
       "Text": text
     };
 
-    setTimeout(() => {
-      if(!isError){
-        console.log(`SMS successful`);
-        return res.status(200).json({
-          message: "Message Sent Successfully!",
+    var reason, code, isError;
+
+    if(k.SIMULATE_SERVER_ERROR){
+      isError = true;
+      reason = "Internal Server Error";
+      code = 500;
+    }else if(invalidMobile(to)){
+      isError = true;
+      reason = "Invalid or Bad Format Mobile Number";
+      code = 400;
+    }else{
+      isError = false;
+    }
+
+    setTimeout(()=>{
+      if(isError){
+        console.log(`SMS Failed!\n${reason}\n${JSON.stringify(data, null, 2)}`);
+        return res.status(code).json({
+          message: "SMS Failed!",
+          reason: reason,
           data: data
-        }); 
+        });
       }else{
-        console.log('SMS Failed');
-        return res.status(500).json({
-          err: "Error in Sending SMS",
+        console.log(`Message Sent Successfully\n${JSON.stringify(data, null, 2)}`);
+        return res.status(200).json({
+          message: "SMS succesful!",
           data: data
         });
       }
-    }, 3000);
+    }, 2000);
   }
 
   sendSMS();
