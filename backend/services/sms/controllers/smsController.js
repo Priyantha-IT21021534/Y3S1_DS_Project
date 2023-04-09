@@ -86,7 +86,7 @@ const sendDummySms = async (req, res, next) => {
       code = 500;
     }else if(invalidMobile(to)){
       isError = true;
-      reason = "Invalid or Bad Format Mobile Number";
+      reason = "Invalid or Bad Format Mobile Number. Required Format Example: 94770000000";
       code = 400;
     }else{
       isError = false;
