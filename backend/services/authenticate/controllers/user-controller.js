@@ -7,9 +7,10 @@ const validator = require('validator')
 //importing jsonwebtoken
 const jwt = require('jsonwebtoken');
 
-
+//const {permission} = require("../permission")
 
 const createToken = (_id) => {
+    console.log(process.env.SECRET)
    return  jwt.sign({_id}, process.env.SECRET, {expiresIn: '60s'})
 }
 
@@ -102,5 +103,48 @@ const login = async(req, res, next) =>{
 
 }
 
+
+const requireAuth = async(req, res, next) => {
+    console.log(req.headers['authorization']);
+  
+    let token = req.headers['authorization'];
+  
+    console.log(process.env.SECRET)
+  
+    if(token){
+      token = token.split(' ')[1];
+      //console.log(token)
+      jwt.verify(token, process.env.SECRET, (err, decoded)=>{
+        if(err){
+          console.log(err)
+          res.status(401).json({message:"please provide a valid token"})
+          
+        }else{
+          req.user = decoded;
+          next();
+        }
+      })
+    }
+  else{
+      res.status(403).json({message:"Please provide a token"})
+    }
+  }
+  
+
+   const ensureAdmin = async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user._id);
+      if (user.role === 'seller') {
+        next();
+      } else {
+        throw new Error('Only sellers can do this');
+      }
+    } catch (err) {
+      res.status(401).json({ error: err.message });
+    }
+  };
+
 exports.signUp = signUp;
 exports.login = login;
+exports.requireAuth = requireAuth;
+exports.ensureAdmin = ensureAdmin;

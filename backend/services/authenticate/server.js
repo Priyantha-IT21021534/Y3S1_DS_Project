@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../shared/.env' });// Load shared .env file using path attribute
 
 const express = require("express");
 const mongoose = require("mongoose");
