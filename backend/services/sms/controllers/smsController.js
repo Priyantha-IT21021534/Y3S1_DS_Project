@@ -73,9 +73,9 @@ const sendDummySms = async (req, res, next) => {
 
   async function sendSMS() {
     var data = {
-      "To": to,
-      "From": from,
-      "Text": text
+      "to": to,
+      "from": from,
+      "text": text
     };
 
     var reason, code, isError;
@@ -84,6 +84,14 @@ const sendDummySms = async (req, res, next) => {
       isError = true;
       reason = "Internal Server Error";
       code = 500;
+    }else if(to == null){
+      isError = true;
+      reason = "'to' is required. Received null";
+      code = 400;
+    }else if(text == null){
+      isError = true;
+      reason = "'text' is required. Received null";
+      code = 400;
     }else if(invalidMobile(to)){
       isError = true;
       reason = "Invalid or Bad Format Mobile Number. Required Format Example: 94770000000";
