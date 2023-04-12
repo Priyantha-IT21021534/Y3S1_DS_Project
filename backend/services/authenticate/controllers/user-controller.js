@@ -9,9 +9,11 @@ const jwt = require('jsonwebtoken');
 
 //const {permission} = require("../permission")
 
-const createToken = (_id) => {
+const {roles}=require("../models/roles");
+
+const createToken = (_id, role) => {
     console.log(process.env.SECRET)
-   return  jwt.sign({_id}, process.env.SECRET, {expiresIn: '60s'})
+   return  jwt.sign({_id, role}, process.env.SECRET, {expiresIn: '120s'})
 }
 
 const signUp = async(req, res, next) =>{
@@ -29,7 +31,7 @@ const signUp = async(req, res, next) =>{
       }
 
      
-     //chaecking whether user already sign up or not based on the mobile No
+     //chaecking whether user already sign up or not based on the email
      let existingUser;
 
      try{
@@ -58,11 +60,12 @@ const signUp = async(req, res, next) =>{
     try{
         await user.save();//saving document into DB
 
-        const token = createToken(user._id) 
+        const token = createToken(user._id, user.role) 
 
         res.status(201).json({message:user, token})
     }catch(err){
         console.log(err);
+        throw new Error('Error saving user');
     }
 
 }
@@ -96,7 +99,7 @@ const login = async(req, res, next) =>{
          return res.status(400).json({message:"Invalid mobile/password"})
      }
 
-     const token = createToken(loggeduser._id) 
+     const token = createToken(loggeduser._id, loggeduser.role) 
 
      //we send this msg along with he token and user details
     return res.status(200).json({message:"Successfully logged in", User:loggeduser, token})
@@ -104,8 +107,77 @@ const login = async(req, res, next) =>{
 }
 
 
+
+
+
+  
+  const getUser = async(req, res, next) =>{
+    const userid = req.id;
+    let user;
+  
+    try{
+        user = await User.findById(userid, "-password"); //this minus operator is used to restrict getting user password.But other details will get                                                     
+     }catch(err){
+        return new Error(err)
+    }
+  
+    if(!user){
+        return res.status(404).json({message:"User not found"})
+    }
+    return res.status(200).json({user});
+  }
+
+  const getUsers = async (req, res, next) => {
+    const users = await User.find({});
+    res.status(200).json({
+     data: users
+    });
+   }
+
+
+ 
+
+exports.signUp = signUp;
+exports.login = login;
+exports.getUser = getUser;
+exports.getUsers = getUsers;
+
+
+
+/*
+
 const requireAuth = async(req, res, next) => {
-    console.log(req.headers['authorization']);
+   
+  console.log(req.headers['authorization']);
+  
+    let token = req.headers.authorization.split(' ')[1];
+
+    if(!token){
+      return res.status(403).send("A token is required for authentication.");
+}
+
+  try{
+    const decoded = jwt.verify(token, process.env.SECRET);
+    console.log("af  "+decoded._id)
+    req.user = await User.findById({_id:decoded._id});
+    console.log("next")
+    next();
+
+  }catch(err){
+    console.error(err);
+    return res.status(401).send(new Error('Invalid token'));
+  }
+
+  }
+
+
+  const checkSellerAccess = async(req, res, next)=>{
+    if (req.user.role !== roles.buyer&&req.user.role !== roles.admin){
+      return next (new ErrorResponse('Access denied, you must be an seller', 401));
+  }
+  next()
+}
+ console.log(req.headers['authorization']);
   
     let token = req.headers['authorization'];
   
@@ -114,6 +186,8 @@ const requireAuth = async(req, res, next) => {
     if(token){
       token = token.split(' ')[1];
       //console.log(token)
+
+      
       jwt.verify(token, process.env.SECRET, (err, decoded)=>{
         if(err){
           console.log(err)
@@ -121,30 +195,36 @@ const requireAuth = async(req, res, next) => {
           
         }else{
           req.user = decoded;
+          
+      console.log("here is checked requestAuth ")
           next();
+
         }
       })
     }
   else{
       res.status(403).json({message:"Please provide a token"})
     }
-  }
-  
 
-   const ensureAdmin = async (req, res, next) => {
-    try {
-      const user = await User.findById(req.user._id);
-      if (user.role === 'seller') {
-        next();
-      } else {
-        throw new Error('Only sellers can do this');
-      }
+
+
+
+     const checkSellerAccess = async(req, res, next)=>{
+    try{
+        const role = await User.findById(req.user._id);
+
+        console.log(role)
+        console.log("Seller access granted");
+        if(role.role === roles.seller){
+            
+            next();
+        } else {
+            console.log("Access denied. You are not a seller.");
+            return res.status(403).json({message:"Access denied. you are not a seller"})
+        }
     } catch (err) {
-      res.status(401).json({ error: err.message });
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
     }
-  };
-
-exports.signUp = signUp;
-exports.login = login;
-exports.requireAuth = requireAuth;
-exports.ensureAdmin = ensureAdmin;
+}
+*/

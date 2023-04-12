@@ -19,11 +19,13 @@ mongoose.connect(link, {
    useNewUrlParser: true,
 	useUnifiedTopology: true
 });
-
+console.log("Connection status: ", mongoose.connection.readyState);
 const connection = mongoose.connection;
 connection.once("open", () => {
 	console.log("MongoDB Connection Success!");
 });
+
+
 
 app.listen(PORT, () => {
 	console.log(`Server is up and running on Port: ${PORT}`)

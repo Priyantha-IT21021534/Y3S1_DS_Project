@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+const {roles}= require("./roles")
+
 const userSchema = new Schema({
 
 
@@ -36,8 +38,8 @@ const userSchema = new Schema({
 
     role: {
         type: String,
-        enum: ['buyer', 'seller', 'admin'],
-        default: 'buyer'
+        enum: [roles.admin, roles.buyer, roles.seller],
+        default: roles.buyer
         
        }
 })
