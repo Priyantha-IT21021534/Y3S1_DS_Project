@@ -1,6 +1,6 @@
 const { signUp, login, getUsers } = require("../controllers/user-controller");
 
-const {requireAuth, requireRoleAdmin} = require("../../shared/middlewares")
+const {requireAuth, requireRoleAdmin} = require("../middlewares")
 
 const router = require("express").Router();
 

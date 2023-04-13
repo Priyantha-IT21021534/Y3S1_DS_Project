@@ -7,9 +7,6 @@ const validator = require('validator')
 //importing jsonwebtoken
 const jwt = require('jsonwebtoken');
 
-//const {permission} = require("../permission")
-
-const {roles}=require("../models/roles");
 
 const createToken = (_id, role) => {
     console.log(process.env.SECRET)

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const productController= require("../controllers/productController");
-const requireAccess  = require("../../shared/middlewares")
+const requireAccess  = require("../../authenticate/middlewares")
 
 router.use(requireAccess.requireAuth)
 

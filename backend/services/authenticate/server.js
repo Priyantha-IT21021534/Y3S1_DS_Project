@@ -13,6 +13,7 @@ const router = require('./routes/user-routes');
 
 //using dependencies
 app.use(cors());
+
 app.use(bodyParser.json());
 app.use('/User', router)
 const link="mongodb+srv://DS_Project:NIsL73uZpYheSBwR@dscluster.i4dqped.mongodb.net/RoleBase?retryWrites=true&w=majority";

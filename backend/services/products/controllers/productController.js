@@ -29,6 +29,21 @@ const getById = async (req, res, next) => {
   return res.status(200).json(product);
 };
 
+//get products by sellerId
+const getBySellerId = async (req, res, next) => {
+  const id = req.userId;
+  let product;
+  try {
+    product = await Products.findById(id);
+  } catch (err) {
+    console.log(err);
+  }
+  if (!product) {
+    return res.status(404).json({ message: "No product found" });
+  }
+  return res.status(200).json(product);
+};
+
 //add products
 const addProduct = async (req, res, next) => {
     const { name, brand, price, weight, upload_date, description, image } =
@@ -36,6 +51,7 @@ const addProduct = async (req, res, next) => {
     let product;
     try {
       product = new Products({
+        sellerId:req.userId,
         name, 
         brand, 
         price,

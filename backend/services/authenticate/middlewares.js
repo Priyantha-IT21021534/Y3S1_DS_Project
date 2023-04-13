@@ -17,11 +17,12 @@ const requireAuth = async(req, res, next) => {
     try{
       decoded = jwt.verify(token.split(' ')[1], process.env.SECRET);
       console.log("user Id  "+decoded._id)
+      req.userId = decoded._id;
       //req.user = await User.findById(decoded._id);
       roleOne =  decoded.role;
       console.log(roleOne)
       console.log("next")
-
+      console.log("req.userId  "+req.userId)
       
       next();
   
