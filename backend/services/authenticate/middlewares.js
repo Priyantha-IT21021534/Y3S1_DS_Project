@@ -3,19 +3,20 @@ const User = require("../authenticate/models/users")
 const jwt = require('jsonwebtoken');
 
 let decoded;
-  let roleOne;
+let roleOne;
 const requireAuth = async(req, res, next) => {
    
-    console.log(req.headers['authorization']);
+
+    const cookie = req.headers.cookie;
+    const token = cookie.split("=")[1];
     
-      let token = req.headers['authorization'];
   
       if(!token){
         return res.status(403).send("A token is required for authentication.");
   }
 
     try{
-      decoded = jwt.verify(token.split(' ')[1], process.env.SECRET);
+      decoded = jwt.verify(token, process.env.SECRET);
       console.log("user Id  "+decoded._id)
       req.userId = decoded._id;
       //req.user = await User.findById(decoded._id);

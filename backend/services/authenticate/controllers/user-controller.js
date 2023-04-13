@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 
 const createToken = (_id, role) => {
     console.log(process.env.SECRET)
-   return  jwt.sign({_id, role}, process.env.SECRET, {expiresIn: '120s'})
+   return  jwt.sign({_id, role}, process.env.SECRET, {expiresIn: '60s'})
 }
 
 const signUp = async(req, res, next) =>{
@@ -59,6 +59,13 @@ const signUp = async(req, res, next) =>{
 
         const token = createToken(user._id, user.role) 
 
+        res.cookie(String(user._id), token, {
+          path: "/",
+          expires: new Date(Date.now() + 1000*60),
+          httpOnly:true,//if this option isn't here cookie will be visible to the frontend
+          sameSite:"lax"
+        })
+
         res.status(201).json({message:user, token})
     }catch(err){
         console.log(err);
@@ -97,6 +104,14 @@ const login = async(req, res, next) =>{
      }
 
      const token = createToken(loggeduser._id, loggeduser.role) 
+
+     res.cookie(String(loggeduser._id), token, {
+      path: "/",
+      expires: new Date(Date.now() + 1000*60),
+      httpOnly:true,//if this option isn't here cookie will be visible to the frontend
+      sameSite:"lax"
+    })
+
 
      //we send this msg along with he token and user details
     return res.status(200).json({message:"Successfully logged in", User:loggeduser, token})
