@@ -50,35 +50,47 @@ const getRate = async(req, res, next) => {
       return res.status(462).json({ message: "Client address not found" });
       
     const distanceDuration = await getDistanceDuration(fromCoordinates, toCoordinates);
-    if(distanceDuration.status == "ok"){
-      duration = Math.ceil(distanceDuration.duration / 360) / 10; // seconds -> hours
-      distance = Math.ceil(distanceDuration.distance / 1000); // meters -> km
-    } else if(distanceDuration.status == "bad")
+    if(distanceDuration.status == "bad")
       return res.status(463).json({ message: "Out of range" });
     else if(distanceDuration.status == "error")
       return res.status(520).json({ message: distanceDuration.error });
-   
-    var rate = (duration + distance + weight * 5) * 10;
-    rate = Math.ceil((rate + 1) / 10) * 10;
-    if(rate < 100)
-      rate = 100;
+    else if(distanceDuration.status == "ok"){
+      duration = Math.ceil((distanceDuration.duration / 3600) / 0.25) * 0.25; // sec -> hrs (multiple of 0.25hrs)
+      if(duration < 0.25)
+        duration = 0.25;
 
-    const days = Math.ceil(duration / 24) + 1;
+      distance = Math.ceil((distanceDuration.distance / 1000) / 0.5) * 0.5; // meters -> km (multiple of 0.5km)
+      if(distance < 0.5)
+        distance = 0.5;
+      console.log(duration, distance, weight);
 
-    console.log({
-      from: fromCoordinates,
-      to: toCoordinates,
-      duration: duration,
-      distance: distance,
-      days: days,
-      rate: rate
-    })
+      var fastRate = distance * 50 + weight * 100;
+      fastRate = Math.ceil(fastRate / 50) * 50;
+      if(fastRate < 800)
+        fastRate = 800;
 
-    return res.status(200).json({
-      days: days,
-      rate: rate
-    });
-    
+      var cheapRate = (distanceDuration.distance / 1000) * 50 + weight * 50;
+      cheapRate = Math.ceil(cheapRate / 10);
+      if(cheapRate < 500)
+        cheapRate = 500;
+
+      const days = Math.ceil(duration / 24) + 1;
+
+      return res.status(200).json({
+        distance: distance,
+        fastDelivery: {
+          rate: fastRate,
+          duration: duration,
+          durationUnit: "hrs"
+        },
+        cheapDelivery: {
+          rate: cheapRate,
+          duration: days,
+          durationUnit: "days"
+        }
+      });
+
+    }
   }catch(e){
     console.error(e);
     return res.status(500).json({ message: "Server Error: "+ err });
@@ -119,11 +131,6 @@ async function getDistanceDuration(location1, location2){
     const response = await axios.post(k.DURATION_URL, data, config);
     const duration = response.data.durations[0][1];
     const distance = response.data.distances[0][1];
-
-    console.log({
-      duration: duration,
-      disance: distance
-    })
 
     if(duration == null || distance == null)
       return {"status":"bad","msg": "cannot be reached"};
