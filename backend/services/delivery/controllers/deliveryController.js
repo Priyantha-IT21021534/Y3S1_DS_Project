@@ -58,6 +58,7 @@ const getRate = async(req, res, next) => {
       duration = Math.ceil((distanceDuration.duration / 3600) / 0.25) * 0.25; // sec -> hrs (multiple of 0.25hrs)
       if(duration < 0.25)
         duration = 0.25;
+      duration += 1.5; // add safe margin for delivery
 
       distance = Math.ceil((distanceDuration.distance / 1000) / 0.5) * 0.5; // meters -> km (multiple of 0.5km)
       if(distance < 0.5)
