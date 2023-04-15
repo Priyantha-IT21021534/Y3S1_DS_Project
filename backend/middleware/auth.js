@@ -25,13 +25,13 @@ const isUser = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  auth(req, res, () => {
-    if (req.user.isAdmin) {
-      next();
-    } else {
-      res.status(403).send("Access denied. Not authorized...");
-    }
-  });
+  // auth(req, res, () => {
+  //   if (req.user.isAdmin) {
+  //     next();
+  //   } else {
+  //     res.status(403).send("Access denied. Not authorized...");
+  //   }
+  // });
 };
 
 module.exports = { auth, isUser, isAdmin };
