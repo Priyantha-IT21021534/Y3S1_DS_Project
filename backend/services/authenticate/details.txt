@@ -1,0 +1,60 @@
+"name":"Anjana",
+    "mobile":774410856,
+    "email":"anjana123@gmail.com",
+    "address":"asfd",
+    "password":"Pasindu123",
+    "role":"admin"
+
+
+    {
+    "name":"Anjana",
+    "mobile":774410856,
+    "email":"pasindu123@gmail.com",
+    "address":"asfd",
+    "password":"Pasi123",
+    "role":"seller"
+    
+}
+
+
+{
+    "name":"Pasindu",
+    "mobile":774410856,
+    "email":"pasi123@gmail.com",
+    "address":"asfd",
+    "password":"Pasi_123456",
+    "role":"buyer"
+    
+}
+
+{
+    "name":"Pasindu",
+    "mobile":774410856,
+    "email":"madushan123@gmail.com",
+    "address":"asfd",
+    "password":"madushan123",
+    "role":"seller"
+    
+}
+
+
+////
+{
+    "name":"Pasindu",
+    "mobile":774410856,
+    "email":"madushan34123@gmail.com",
+    "address":"asfd",
+    "password":"madushan34123",
+    "role":"seller"
+    
+}
+
+{
+    "name":"Pasindu",
+    "mobile":774410856,
+    "email":"pasindu@gmail.com",
+    "address":"asfd",
+    "password":"madushan34123",
+    "role":"seller"
+    
+}

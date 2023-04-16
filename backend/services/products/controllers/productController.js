@@ -29,6 +29,65 @@ const getById = async (req, res, next) => {
   return res.status(200).json(product);
 };
 
+//search products using name, or supplier, brand
+const getSearch = async(req, res, next) => {
+
+  const {search} = req.query;
+  let products;
+
+  if(search){
+    products = await Products.aggregate(
+      [
+        {
+          '$search': {
+            'index': 'product', 
+            'autocomplete': {
+              'query': search, 
+              'path': 'name'
+            }
+          }
+        }, {
+          '$project': {
+            'name': 1, 
+            'brand': 1, 
+            'price': 1, 
+            'image': 1, 
+            'brand': 1, 
+            'weight': 1
+          }
+        }
+      ]
+    )
+  }else{
+    return res.status(400).json({message:"Check the input"})
+  }
+
+  if(products.length===0){
+    return res.status(200).json({message:'nothing to show'})
+  }
+else{
+  return res.status(200).json({message: 'Fetched products', data: { products }});
+}
+ 
+
+      
+} 
+
+//get products by sellerId
+const getBySellerId = async (req, res, next) => {
+  const id = req.userId;
+  let product;
+  try {
+    product = await Products.findById(id);
+  } catch (err) {
+    console.log(err);
+  }
+  if (!product) {
+    return res.status(404).json({ message: "No product found" });
+  }
+  return res.status(200).json(product);
+};
+
 //add products
 const addProduct = async (req, res, next) => {
     const { name, brand, price, weight, upload_date, description, image } =
@@ -36,6 +95,7 @@ const addProduct = async (req, res, next) => {
     let product;
     try {
       product = new Products({
+        sellerId:req.userId,
         name, 
         brand, 
         price,
@@ -100,3 +160,7 @@ const deleteProduct = async (req, res, next) => {
   exports.getById = getById;
   exports.updateProduct = updateProduct;
   exports.deleteProduct = deleteProduct;
+  exports.getSearch = getSearch
+
+
+  
