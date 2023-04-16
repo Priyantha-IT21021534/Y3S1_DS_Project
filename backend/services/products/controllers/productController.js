@@ -75,17 +75,17 @@ else{
 
 //get products by sellerId
 const getBySellerId = async (req, res, next) => {
-  const id = req.userId;
-  let product;
+  const id = req.userId;//this is the user's ID. which is get from the jwt token
+  let products;
   try {
-    product = await Products.findById(id);
+    products = await Products.find({sellerId:id});
   } catch (err) {
     console.log(err);
   }
-  if (!product) {
+  if (!products) {
     return res.status(404).json({ message: "No product found" });
   }
-  return res.status(200).json(product);
+  return res.status(200).json(products);
 };
 
 //add products
@@ -160,7 +160,8 @@ const deleteProduct = async (req, res, next) => {
   exports.getById = getById;
   exports.updateProduct = updateProduct;
   exports.deleteProduct = deleteProduct;
-  exports.getSearch = getSearch
+  exports.getSearch = getSearch;
+  exports.getBySellerId = getBySellerId
 
 
   

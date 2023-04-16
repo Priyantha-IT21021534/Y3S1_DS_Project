@@ -11,5 +11,7 @@ router.get("/getProducts", requireAccess.requireAuth, requireAccess.requireRoleB
 router.put("/updateProduct/:id",requireAccess.requireAuth, requireAccess.requireRoleSeller, productController.updateProduct);
 //router.delete("/deleteProduct/:id",productController.deleteProduct);
 router.get("/search/", requireAccess.requireAuth, requireAccess.requireRoleBuyer, productController.getSearch)
+router.get("/:sellerId/products", requireAccess.requireAuth, requireAccess.requireRoleSeller, productController.getBySellerId)
+
 
 module.exports = router;
