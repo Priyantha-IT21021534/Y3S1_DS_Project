@@ -8,8 +8,8 @@ import NotFound from "./components/NotFound";
 import Cart from "./components/Cart";
 
 import "react-toastify/dist/ReactToastify.css";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
+// import Register from "./components/auth/Register";
+// import Login from "./components/auth/Login";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./slices/authSlice";
@@ -32,8 +32,8 @@ function App() {
             { <Route path="/" element={<Home />} /> }
             { <Route path="/cart" element={<Cart />} /> }
             <Route path="/checkout-success" element={<CheckoutSuccess />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

@@ -15,7 +15,7 @@ const products = [
     desc: "test",
     price: 699,
     image:
-      "https://res.cloudinary.com/chaoocharles/image/upload/v1629289889/online-shop/iphone12_efhrcp.jpg",
+    "https://i.postimg.cc/XYgZw7ph/sale-sale-valentine-s-day-50-off.png",
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const products = [
     desc: "test",
     price: 399,
     image:
-      "https://res.cloudinary.com/chaoocharles/image/upload/v1629289889/online-shop/galaxyS_dvjf5w.png",
+    "https://i.postimg.cc/XYgZw7ph/sale-sale-valentine-s-day-50-off.png",
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const products = [
     desc: "test",
     price: 399,
     image:
-      "https://res.cloudinary.com/chaoocharles/image/upload/v1629289889/online-shop/galaxyS_dvjf5w.png",
+    "https://i.postimg.cc/XYgZw7ph/sale-sale-valentine-s-day-50-off.png",
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ const products = [
     desc: "test",
     price: 399,
     image:
-      "https://res.cloudinary.com/chaoocharles/image/upload/v1629289889/online-shop/galaxyS_dvjf5w.png",
+    "https://i.postimg.cc/XYgZw7ph/sale-sale-valentine-s-day-50-off.png",
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ const products = [
     desc: "test",
     price: 399,
     image:
-      "https://res.cloudinary.com/chaoocharles/image/upload/v1629289889/online-shop/galaxyS_dvjf5w.png",
+    "https://i.postimg.cc/XYgZw7ph/sale-sale-valentine-s-day-50-off.png",
   },
   {
     id: 3,
@@ -60,7 +60,7 @@ const products = [
     desc: "test",
     price: 399,
     image:
-      "https://res.cloudinary.com/chaoocharles/image/upload/v1629289889/online-shop/galaxyS_dvjf5w.png",
+    "https://i.postimg.cc/XYgZw7ph/sale-sale-valentine-s-day-50-off.png",
   },
   {
     id: 3,
@@ -69,7 +69,7 @@ const products = [
     desc: "test",
     price: 399,
     image:
-      "https://res.cloudinary.com/chaoocharles/image/upload/v1629289889/online-shop/galaxyS_dvjf5w.png",
+    "https://i.postimg.cc/XYgZw7ph/sale-sale-valentine-s-day-50-off.png",
   },
 ];
 

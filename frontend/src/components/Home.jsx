@@ -8,7 +8,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data, error, isLoading } = useGetAllProductsQuery();
+  const { data} = useGetAllProductsQuery();
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));

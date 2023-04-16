@@ -65,7 +65,7 @@ router.post("/create-checkout-session", async (req, res) => {
         shipping_rate_data: {
           type: "fixed_amount",
           fixed_amount: {
-            amount: 1500,
+            amount: 200,
             currency: "usd",
           },
           display_name: "Next day air",
@@ -183,5 +183,4 @@ router.post(
     res.status(200).end();
   }
 );
-
 module.exports = router;
