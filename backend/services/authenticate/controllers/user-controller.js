@@ -146,6 +146,10 @@ const login = async(req, res, next) =>{
     });
    }
 
+   const logOut = async(req, res)=>{
+    res.clearCookie();
+    
+   }
 
  
 
@@ -156,87 +160,3 @@ exports.getUsers = getUsers;
 
 
 
-/*
-
-const requireAuth = async(req, res, next) => {
-   
-  console.log(req.headers['authorization']);
-  
-    let token = req.headers.authorization.split(' ')[1];
-
-    if(!token){
-      return res.status(403).send("A token is required for authentication.");
-}
-
-  try{
-    const decoded = jwt.verify(token, process.env.SECRET);
-    console.log("af  "+decoded._id)
-    req.user = await User.findById({_id:decoded._id});
-    console.log("next")
-    next();
-
-  }catch(err){
-    console.error(err);
-    return res.status(401).send(new Error('Invalid token'));
-  }
-
-  }
-
-
-  const checkSellerAccess = async(req, res, next)=>{
-    if (req.user.role !== roles.buyer&&req.user.role !== roles.admin){
-      return next (new ErrorResponse('Access denied, you must be an seller', 401));
-  }
-  next()
-}
- console.log(req.headers['authorization']);
-  
-    let token = req.headers['authorization'];
-  
-    console.log(process.env.SECRET)
-  
-    if(token){
-      token = token.split(' ')[1];
-      //console.log(token)
-
-      
-      jwt.verify(token, process.env.SECRET, (err, decoded)=>{
-        if(err){
-          console.log(err)
-          res.status(401).json({message:"please provide a valid token"})
-          
-        }else{
-          req.user = decoded;
-          
-      console.log("here is checked requestAuth ")
-          next();
-
-        }
-      })
-    }
-  else{
-      res.status(403).json({message:"Please provide a token"})
-    }
-
-
-
-
-     const checkSellerAccess = async(req, res, next)=>{
-    try{
-        const role = await User.findById(req.user._id);
-
-        console.log(role)
-        console.log("Seller access granted");
-        if(role.role === roles.seller){
-            
-            next();
-        } else {
-            console.log("Access denied. You are not a seller.");
-            return res.status(403).json({message:"Access denied. you are not a seller"})
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
-*/
