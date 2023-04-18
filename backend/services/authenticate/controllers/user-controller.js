@@ -153,12 +153,28 @@ const login = async(req, res, next) =>{
     
    }
 
- 
+   const logout = (req, res, next) => {
+    const userid = req.userId;
+    const cookies = req.headers.cookie;
+    const prevToken = cookies.split("=")[1];
+    if (!prevToken) {
+      return res.status(400).json({ message: "Couldn't find token" });
+    }
+    jwt.verify(String(prevToken), process.env.SECRET, (err, user) => {
+      if (err) {
+        console.log(err);
+        return res.status(403).json({ message: "Authentication failed" });
+      }
+      res.clearCookie(`${userid}`);
+      req.cookies[`${userid}`] = "";
+      return res.status(200).json({ message: "Successfully Logged Out" });
+    });
+  };
 
 exports.signUp = signUp;
 exports.login = login;
 exports.getUser = getUser;
 exports.getUsers = getUsers;
-
+exports.logout = logout;
 
 

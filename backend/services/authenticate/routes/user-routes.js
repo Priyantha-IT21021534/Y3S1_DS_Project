@@ -1,4 +1,4 @@
-const { signUp, login, getUsers, getUser } = require("../controllers/user-controller");
+const { signUp, login, getUsers, getUser, logout } = require("../controllers/user-controller");
 
 const {requireAuth, requireRoleAdmin} = require("../middlewares")
 
@@ -9,6 +9,7 @@ router.post("/login", login);
 
 router.get("/users", requireAuth, requireRoleAdmin, getUsers);
 router.get("/profile", requireAuth, getUser)
+router.post("/logout", requireAuth, logout);
 
 
 module.exports = router;
