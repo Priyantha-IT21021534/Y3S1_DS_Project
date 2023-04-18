@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 import '../../assets/styles/Forms.css'
+import { useDispatch } from 'react-redux';
+import { authActions } from '../Store';
 
 const Login = () => {
 
+  const dispatch = useDispatch()
     const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email:"",
@@ -35,7 +38,7 @@ const Login = () => {
   const handleSubmit = (e) =>{
     e.preventDefault();
     console.log(inputs)
-    sendData().then(()=>navigate("/profile"))
+    sendData().then(() => dispatch(authActions.login())).then(() => navigate("/profile"));
   }
 
   return (
