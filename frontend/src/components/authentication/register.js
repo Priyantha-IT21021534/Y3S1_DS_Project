@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import axios from "axios"
 import '../../assets/styles/Forms.css'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { authActions } from '../Store';
 const Register = () => {
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch()
   const [inputs, setInputs] = useState({
     name:"",
     mobile:"",
@@ -43,7 +45,7 @@ const Register = () => {
   const handleSubmit = (e) =>{
     e.preventDefault();
     console.log(inputs)
-    sendData().then(()=>navigate("/login"))
+    sendData().then(() => dispatch(authActions.login())).then(()=>navigate("/profile"))
   }
 
   return (

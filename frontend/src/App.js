@@ -20,7 +20,9 @@ const App = () => {
       <Routes>
         <Route path="/signUp" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
-       {isLoggedIn && <Route path="/profile" element={<Profile/>}/>}  
+       {isLoggedIn && <Route path="/profile" element={<Profile/>}/>}
+       {isLoggedIn && <Route path="/admin" element={<Admin/>}/>} 
+       {isLoggedIn && <Route path="/products" element={<Products/>}/>}  
       </Routes>
 
     </BrowserRouter>

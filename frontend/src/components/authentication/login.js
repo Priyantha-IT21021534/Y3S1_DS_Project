@@ -35,10 +35,26 @@ const Login = () => {
 
   }
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = async(e) =>{
     e.preventDefault();
     console.log(inputs)
-    sendData().then(() => dispatch(authActions.login())).then(() => navigate("/profile"));
+    try{
+      const response = await sendData();
+
+      console.log(response.User.role)
+
+      if (response.User.role === "admin") {
+        navigate("/admin");
+      } else if (response.User.role === "seller") {
+        navigate("/profile");
+      } else {
+        navigate("/products");
+      }
+
+      dispatch(authActions.login());
+    }catch(err){
+      console.log(err)
+    }
   }
 
   return (
