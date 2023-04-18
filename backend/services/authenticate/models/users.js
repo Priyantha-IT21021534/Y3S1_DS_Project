@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 const {roles}= require("./roles")
 
-
 const userSchema = new Schema({
 
 
@@ -45,6 +44,5 @@ const userSchema = new Schema({
     
 })
 
-const User = mongoose.model("user", userSchema)
+module.exports = mongoose.model("user", userSchema)
 
-module.exports = User;

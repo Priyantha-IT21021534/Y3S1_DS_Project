@@ -10,7 +10,6 @@ const requireAuth = async(req, res, next) => {
     const cookie = req.headers.cookie;
     const token = cookie.split("=")[1];
     
-  
       if(!token){
         return res.status(403).send("A token is required for authentication.");
   }
@@ -19,10 +18,8 @@ const requireAuth = async(req, res, next) => {
       decoded = jwt.verify(token, process.env.SECRET);
       console.log("user Id  "+decoded._id)
       req.userId = decoded._id;
-      //req.user = await User.findById(decoded._id);
       roleOne =  decoded.role;
       console.log(roleOne)
-      console.log("next")
       console.log("req.userId  "+req.userId)
       
       next();

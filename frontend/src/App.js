@@ -1,9 +1,20 @@
 import React from "react";
-import Frame from "./components/Frame";
+
+import {Route, Routes, BrowserRouter} from 'react-router-dom'
+import Register from "./components/authentication/register";
+import Login from "./components/authentication/login";
+import Profile from "./components/Profile/profile";
 
 const App = () => {
   return (
-    <Frame />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signUp" element={<Register/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/profile" element={<Profile/>}/>
+      </Routes>
+
+    </BrowserRouter>
   );
 }
 export default App;

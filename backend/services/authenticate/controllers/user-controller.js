@@ -124,8 +124,10 @@ const login = async(req, res, next) =>{
 
   
   const getUser = async(req, res, next) =>{
-    const userid = req.id;
+    const userid = req.userId;
     let user;
+
+    console.log("user ID (get USER)" + userid)
   
     try{
         user = await User.findById(userid, "-password"); //this minus operator is used to restrict getting user password.But other details will get                                                     
