@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 8070;
 
 //using dependencies
-app.use(cors());
+app.use(cors({credentials: true, origin: "http://localhost:3000"}));
 app.use(bodyParser.json());
 app.use("/products",router)
 const link="mongodb+srv://DS_Project:NIsL73uZpYheSBwR@dscluster.i4dqped.mongodb.net/Product_Service?retryWrites=true&w=majority";
