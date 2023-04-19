@@ -142,16 +142,24 @@ const login = async(req, res, next) =>{
   }
 
   const getUsers = async (req, res, next) => {
-    const users = await User.find({});
-    res.status(200).json({
-     data: users
-    });
+    let users;
+
+    try{
+      users = await User.find({});
+  }catch(err){
+      console.log(err)
+  }
+
+  if(!users){
+      res.status(404).json({message:"There are no Users added"})
+  }
+  else{
+      res.status(200).json({users})
+  }
+
    }
 
-   const logOut = async(req, res)=>{
-    res.clearCookie();
-    
-   }
+
 
    const logout = (req, res, next) => {
     const userid = req.userId;
