@@ -1,4 +1,5 @@
 // Dependencies
+const axios = require('axios');
 
 // Custom Files
 // const k = require("../constants");
@@ -21,7 +22,7 @@ exports.pingPaymentServer = pingPaymentServer;
 
 
 // Create Dummy Payment
-const dummyCardPayment = (req, res, next) => {
+const dummyCardPayment = async (req, res, next) => {
   var error;
   const mailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const dateRegex = /^(0[1-9]|1[0-2])\/(2\d{3})$/;
@@ -51,6 +52,7 @@ const dummyCardPayment = (req, res, next) => {
     console.error("amount not specified");
   }
 
+  // check if price is a valid input
   if(error == null && !priceRegex.test(amount)){
     error = "invalidPrice";
     console.error("Invalid Price");
@@ -85,7 +87,7 @@ const dummyCardPayment = (req, res, next) => {
       console.error("Card is expired");
     }
   }
-
+  
   // responses
   if(error){
     switch(error){
@@ -97,20 +99,29 @@ const dummyCardPayment = (req, res, next) => {
       case "expformat": return res.status(400).json({err: "Incorrect expiration date format, format: MM/YYYY" });
       case "expired": return res.status(422).json({err: "Card expired"});
       default: return res.status(500).json({err: "Unknown Error"});
-    }
+    };
   }else{
     console.log("Payment SuccessFul");
+
+    const emaildata = {
+      "to": email,
+      "subject": "Payment Received",
+      "message": `Your Transaction of Rs.${amount} to Ayu is complete`
+    };
+
+    const smsData = {
+      to: "94763309823",
+      text: `Your Payment of Rs.${amount} was received by Ayu`
+    }
+    
+    const emailResult = await axios.post("http://localhost:8100/email/sendMail", emaildata);
+    const smsResult = await axios.post("http://localhost:8200/sms/sendSms", smsData);
+
+    console.log(emailResult.data);
+    console.log(smsResult.data);
+
     return res.status(200).json({message: "Payment successful. Rs."+ amount});
   }
 
 };
 exports.dummyCardPayment = dummyCardPayment;
-
-
-
-
-
-// const dummyPaypal = (req, res, next) => {
-
-// };
-// exports.dummyPaypal = dummyPaypal;
