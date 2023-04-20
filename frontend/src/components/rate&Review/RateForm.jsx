@@ -4,23 +4,33 @@ import axios from "axios";
 import swal from 'sweetalert';
 
 const RateForm = () => {
-  const [rateValue, setRateValue] = useState();
-  const [rateType, setRateType] = useState("productId");
+  const [rateType, setRateType] = useState("product");
+  const [rateId, setRateId] = useState("");
+  const [rateValue, setRateValue] = useState(0);
   const [review, setReview] = useState("");
+
+  useEffect(()=>{
+    document.getElementById("rateHead").innerHTML = 
+    `
+    Rate ${rateType} <br />
+    ${rateType}Id: ${rateId}
+    `;
+  },[rateType, rateId]);
 
   useEffect(()=>{
     document.getElementById("rateValue").innerHTML = 
       `
         Rate for: ${rateType} <br />
+        Rate Id: ${rateId} <br />
         Rating: ${rateValue} <br />
         Review: ${review}
       `;
-  },[rateValue, review])
+  },[rateType, rateId, rateValue, review])
 
   const submitData = async (event)=>{
     event.preventDefault();
 
-    if(rateValue != null){
+    if(rateValue !== 0){
       const reviewData = {
         rate: rateValue,
         reviews: review
@@ -35,6 +45,7 @@ const RateForm = () => {
           icon: "success"
         });
       }else{
+        console.log("error");
         swal({
           title: "Error",
           text: "Rate posting failed",
@@ -52,8 +63,8 @@ const RateForm = () => {
   };
 
   return(
-    <div class="m-5 p-5">
-      <h2 id="rateType" className="px-3">Product rate</h2>
+    <div className="m-5 p-5">
+      <h2 id="rateHead" className="px-3">Rate</h2>
       <p id="rateValue"></p>
       <form onSubmit={submitData}>
         <ReactStars
