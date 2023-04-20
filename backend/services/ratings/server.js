@@ -6,10 +6,13 @@ const router = require("./routes/review-routes");
 const app = express();
 
 //declare port
-const PORT = process.env.PORT || 8070;
+const PORT = process.env.PORT || 8079;
 
-//using dependencies
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
+
 app.use(bodyParser.json());
 app.use("/review",router)
 const link="mongodb+srv://DS_Project:NIsL73uZpYheSBwR@dscluster.i4dqped.mongodb.net/Review&Rate?retryWrites=true&w=majority";

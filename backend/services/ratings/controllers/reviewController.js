@@ -42,11 +42,10 @@ const addReview = async (req, res, next) => {
       await review.save();
     } catch (err) {
       console.log(err);
-    }
-    if (!review) {
       return res.status(500).json({ message: "Unable to add" });
     }
-    return res.status(201).json(review);
+    console.log("success in adding review");
+    return res.status(201).json({message: "Success", data: review});
   };
 
   //update reviews
