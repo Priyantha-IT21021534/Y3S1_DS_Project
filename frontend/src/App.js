@@ -7,6 +7,8 @@ import Profile from "./components/Profile/profile";
 import Header from "./components/header";
 import Admin from "./components/home_Pages/Admin";
 import Products from "./components/home_Pages/Products";
+import RateForm from "./components/rate&Review/RateForm";
+
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -20,6 +22,7 @@ const App = () => {
       <Routes>
         <Route path="/signUp" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/rateBuyer" element={<RateForm/>}/>
        {isLoggedIn && <Route path="/profile" element={<Profile/>}/>}
        {isLoggedIn && <Route path="/admin" element={<Admin/>}/>} 
        {isLoggedIn && <Route path="/products" element={<Products/>}/>}  
