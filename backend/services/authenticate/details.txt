@@ -13,7 +13,6 @@
     "address":"asfd",
     "password":"Pasi123",
     "role":"seller"
-    
 }
 
 

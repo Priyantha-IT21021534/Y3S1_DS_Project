@@ -1,0 +1,16 @@
+.home-products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+
+.a_Product{
+    margin: 10px;
+    text-align: center;
+    border: solid 1px black;
+}
+
+.a_Product p{
+    font-size: 50px;
+}
