@@ -10,4 +10,5 @@ router.get("/getCarts", requireAccess.requireAuth, requireAccess.requireRoleBuye
 router.get("/getCart/:userId",requireAccess.requireAuth, requireAccess.requireRoleBuyer, cartController.getCart);
 router.put("/updateCart/:id",requireAccess.requireAuth, requireAccess.requireRoleBuyer, cartController.updateCart);
 router.delete("/deleteProduct/:id",requireAccess.requireAuth, requireAccess.requireRoleBuyer, cartController.deleteCart);
+
 module.exports = router;
