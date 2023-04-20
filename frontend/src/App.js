@@ -7,11 +7,13 @@ import Profile from "./components/Profile/profile";
 import Header from "./components/header";
 import Admin from "./components/home_Pages/Admin";
 import Products from "./components/home_Pages/Products";
+import Productinfo from "./components/ProductInfo/productinfo";
+import Cart from "./components/ProductInfo/cart";
 import { useSelector } from "react-redux";
 
 const App = () => {
 
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   console.log(isLoggedIn);
 
   return (
@@ -23,6 +25,8 @@ const App = () => {
        {isLoggedIn && <Route path="/profile" element={<Profile/>}/>}
        {isLoggedIn && <Route path="/admin" element={<Admin/>}/>} 
        {isLoggedIn && <Route path="/products" element={<Products/>}/>}  
+       {isLoggedIn && <Route path="/getProduct/:id" element={<Productinfo/>}/>}
+       {isLoggedIn && <Route path="/cart" element={<Cart/>}/>}
       </Routes>
 
     </BrowserRouter>
@@ -30,4 +34,3 @@ const App = () => {
 }
 export default App;
 
-//profile route is only working when isLoggedIn is true

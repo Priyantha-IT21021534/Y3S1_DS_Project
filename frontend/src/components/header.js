@@ -8,7 +8,12 @@ axios.defaults.withCredentials = true;
 
 const Header = () => {
 
-    const isLoggedIn = useSelector((state) => state.isLoggedIn);
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+    const quantity = useSelector((state) => state.cart.quantity)
+
+    //console.log(cart)
+
     const dispatch = useDispatch();
     const sendLogoutReq = async()=>{
 
@@ -45,7 +50,11 @@ const Header = () => {
           </>
 )}
           <li className="header__item">
-     {isLoggedIn && <Link onClick={handleLogout} className='logout' to="./">Log Out</Link>}     
+     {isLoggedIn && <Link onClick={handleLogout} className='logout' to="./">Log Out</Link>}
+
+     <Link to="./cart">{isLoggedIn && <div><span class="badge bg-primary">{quantity}</span>
+     <i class="bi bi-cart-fill"></i></div>}</Link>
+        
           </li>
         </ul>
       </nav>
@@ -55,7 +64,3 @@ const Header = () => {
 }
 
 export default Header
-
-
-
-

@@ -26,7 +26,7 @@ const getById = async (req, res, next) => {
   if (!product) {
     return res.status(404).json({ message: "No product found" });
   }
-  return res.status(200).json(product);
+  return res.status(200).json({product});
 };
 
 //search products using name, or supplier, brand
