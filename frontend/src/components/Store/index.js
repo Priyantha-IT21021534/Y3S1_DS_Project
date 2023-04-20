@@ -26,6 +26,11 @@ const cartSlice = createSlice({
       state.products.push(action.payload);//adding Product 
       state.total += action.payload.price * action.payload.quantity;
     },
+    resetCart: (state) => {
+      state.products = [];
+      state.quantity = 0;
+      state.total = 0;
+    },
   },
 });
 
@@ -42,3 +47,10 @@ export const authActions = authSlice.actions;
 export const store = configureStore({
   reducer: rootReducer,
   });
+
+store.subscribe(()=>{
+  const {isLoggedIn} = store.getState().auth;
+  if(!isLoggedIn){
+    store.dispatch(cartSlice.actions.resetCart())
+  }
+})
