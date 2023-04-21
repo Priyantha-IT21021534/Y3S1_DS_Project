@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 axios.defaults.withCredentials = true;
 const Admin = () => {
 
@@ -34,6 +35,8 @@ const Admin = () => {
     <div><div className='allUsers'>
 
     <h1><center>Users</center></h1>
+
+    <button><Link to="./viewOrders">View Orders</Link></button>
 
 <table className="table">
   <thead className="thead-dark">  

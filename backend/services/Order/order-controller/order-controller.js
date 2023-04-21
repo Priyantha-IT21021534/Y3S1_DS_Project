@@ -25,7 +25,7 @@ const updateOrder =  async(req, res, next)=>{
         const updatedOrder = await Order.findByIdAndUpdate(
           req.params.id,
           {
-            $set: req.body,
+            $set: {status:req.body.status},
           },
           { new: true }
         );

@@ -19,12 +19,14 @@ const cartSlice = createSlice({
     products: [],
     quantity: 0,
     total: 0,
+    withCommision:0,
   },
   reducers: {
     addProduct: (state, action) => {
       state.quantity += 1;
       state.products.push(action.payload);//adding Product 
       state.total += action.payload.price * action.payload.quantity;
+      state.withCommision = state.total + state.total* 0.1;
     },
     resetCart: (state) => {
       state.products = [];

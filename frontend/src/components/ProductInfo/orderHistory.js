@@ -28,7 +28,7 @@ getOrders()
 
             <th>Name</th>
             <th>Quantity</th>
-        {order.products.map((product, key)=>(
+        {order.products.map((product, _id)=>(
             <tr key={product._id}> 
                 <td>{product.name}</td>
                 <td>{product.quantity}</td>

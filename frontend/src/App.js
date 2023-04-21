@@ -10,6 +10,7 @@ import Products from "./components/home_Pages/Products";
 import Productinfo from "./components/ProductInfo/productinfo";
 import Cart from "./components/ProductInfo/cart";
 import OrderHistory from "./components/ProductInfo/orderHistory";
+import ViewOrders from "./components/ProductInfo/viewOrders";
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -29,8 +30,9 @@ const App = () => {
        {isLoggedIn && <Route path="/getProduct/:id" element={<Productinfo/>}/>}
        {isLoggedIn && <Route path="/cart" element={<Cart/>}/>}
        {isLoggedIn && <Route path="/getOrders" element={<OrderHistory/>}/>}
+       {isLoggedIn && <Route path="/admin/viewOrders" element={<ViewOrders/>}/>}
       </Routes>
-
+      
     </BrowserRouter>
   );
 }

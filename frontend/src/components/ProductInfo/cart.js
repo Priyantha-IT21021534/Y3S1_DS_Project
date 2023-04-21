@@ -18,7 +18,7 @@ const Cart = () => {
           quantity: product.quantity,
           })),
 
-          amount:cart.total,
+          amount:cart.withCommision,
         
         status:"pending"
     }
@@ -65,6 +65,9 @@ const Cart = () => {
           <tr>    
             <th className="cart-total">Cart Total:</th>
             <td className="cart-total"><strong>{cart.total}</strong></td>
+
+            <th className="cart-total">With Commission:</th>
+            <td className="cart-total"><strong>{cart.withCommision}</strong></td>
 
             <th className="cart-total">Item Count:</th>
             <td className="cart-total"><strong>{cart.products.length}</strong></td>
