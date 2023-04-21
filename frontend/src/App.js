@@ -9,6 +9,7 @@ import Admin from "./components/home_Pages/Admin";
 import Products from "./components/home_Pages/Products";
 import Productinfo from "./components/ProductInfo/productinfo";
 import Cart from "./components/ProductInfo/cart";
+import OrderHistory from "./components/ProductInfo/orderHistory";
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
        {isLoggedIn && <Route path="/products" element={<Products/>}/>}  
        {isLoggedIn && <Route path="/getProduct/:id" element={<Productinfo/>}/>}
        {isLoggedIn && <Route path="/cart" element={<Cart/>}/>}
+       {isLoggedIn && <Route path="/getOrders" element={<OrderHistory/>}/>}
       </Routes>
 
     </BrowserRouter>

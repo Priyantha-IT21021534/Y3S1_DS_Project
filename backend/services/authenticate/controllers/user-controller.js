@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 
 const createToken = (_id, role) => {
     console.log(process.env.SECRET)
-   return  jwt.sign({_id, role}, process.env.SECRET, {expiresIn: '30s'})
+   return  jwt.sign({_id, role}, process.env.SECRET, {expiresIn: '30m'})
 }
 
 const signUp = async(req, res, next) =>{
@@ -61,7 +61,7 @@ const signUp = async(req, res, next) =>{
 
         res.cookie(String(user._id), token, {
           path: "/",
-          expires: new Date(Date.now() + 1000*30),
+          expires: new Date(Date.now() + 1000*60*30),
           httpOnly:true,//if this option isn't here cookie will be visible to the frontend
           sameSite:"lax"
         })
@@ -107,7 +107,7 @@ const login = async(req, res, next) =>{
 
      res.cookie(String(loggeduser._id), token, {
       path: "/",
-      expires: new Date(Date.now() + 1000*30),
+      expires: new Date(Date.now() + 1000*60*30),
       httpOnly:true,//if this option isn't here cookie will be visible to the frontend
       sameSite:"lax"
     })

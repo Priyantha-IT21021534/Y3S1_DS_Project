@@ -1,34 +1,61 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import '../../assets/styles/cart.css'
+import axios from 'axios'
 
 const Cart = () => {
 
     const cart = useSelector((state) => state.cart)
 
+    const handleSubmit = async(e)=>{
+    e.preventDefault();
+
+      const orderData = {
+
+        products: cart.products.map((product) => ({
+          productId: product._id,
+          name:product.name,
+          quantity: product.quantity,
+          })),
+
+          amount:cart.total,
+        
+        status:"pending"
+    }
+
+    try{
+      const res = await axios.post("http://localhost:8020/Order/addOrder", orderData);
+      console.log(orderData)
+      console.log(res.data)
+    }catch (error) {
+      console.error(error);
+    }
+  };
+    
+
   return (
     <div className="container">
+      <form  onSubmit={handleSubmit}>
       <h1>Shopping Cart</h1>
       <table>
         
-            <div>
-            <tr>
+           
+            
             <th><center>Product</center></th>
             <th><center>Price</center></th>
             <th><center>Quantity</center></th>
             
-          </tr>
-            </div>
+          
+           
             {cart.products.map((product)=>(
         <tbody>
             
-            <div><tr>
+            
             <td>{product.name}</td>
             <td>{product.quantity}</td>
             <td>{product.quantity}*{product.price}</td>
-          </tr>
-          </div>
-                
+          
+          
             
           
         </tbody>
@@ -45,11 +72,26 @@ const Cart = () => {
         </tfoot>
       </table>
 
-      <button>CheckOut</button>
+      
 
       <br/>
       <br/>
-      <div class="form-check">
+      
+
+<button type="submit">CheckOut</button>
+</form>
+    </div>
+  
+  )
+}
+
+export default Cart
+
+/*<label>Address</label>
+  <input type="address"/>
+
+
+  div class="form-check">
         <h1>SHIPPING WITH ANONYMOUS</h1>
   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
   <label class="form-check-label" for="flexRadioDefault1">
@@ -61,10 +103,8 @@ const Cart = () => {
   <label class="form-check-label" for="flexRadioDefault2">
   FAST DELIVERY
   </label>
-</div>
-    </div>
+<br/>
   
-  )
-}
+</div>
 
-export default Cart
+*/
