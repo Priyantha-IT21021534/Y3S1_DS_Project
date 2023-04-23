@@ -1,11 +1,11 @@
 {
-  "name": "delivery",
+  "name": "payment",
   "version": "1.0.0",
   "description": "",
-  "main": "delivery-server.js",
+  "main": "payment-server.js",
   "scripts": {
-    "start": "node delivery-server.js",
-    "dev": "nodemon delivery-server.js"
+    "start": "node payment-server.js",
+    "dev": "nodemon payment-server.js"
   },
   "keywords": [],
   "author": "Priyantha Fernando",

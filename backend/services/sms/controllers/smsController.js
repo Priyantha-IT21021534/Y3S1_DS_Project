@@ -20,7 +20,7 @@ exports.pingSmsServer = pingSmsServer;
 
 
 
-// Send sms
+// Send sms (Vonage)
 const sendSms = async (req, res, next) => {
 
   const {to, text} = req.body;
