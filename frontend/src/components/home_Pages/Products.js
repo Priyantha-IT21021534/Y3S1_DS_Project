@@ -36,7 +36,7 @@ const Products = () => {
 <p>Weight:{product.weight}</p>
 <p>Image:{product.image}</p>
 <button className="btn btn-info p-1 me-2" onClick = {()=>navigate(`/getProduct/${product._id}`)}>INFO</button>
-<button className="btn btn-success p-1 me-2">⭐⭐⭐</button>
+<button className="btn btn-success p-1 me-2" onClick = {()=>navigate(`/rateBuyer/${product._id}`)}>⭐⭐⭐</button>
 
 <br/><br/></div>)) : null}
 </div>

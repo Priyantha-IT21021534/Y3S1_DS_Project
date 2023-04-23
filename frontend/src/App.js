@@ -11,6 +11,8 @@ import Productinfo from "./components/ProductInfo/productinfo";
 import Cart from "./components/ProductInfo/cart";
 import OrderHistory from "./components/ProductInfo/orderHistory";
 import ViewOrders from "./components/ProductInfo/viewOrders";
+import RateForm from "./components/rate&Review/RateForm";
+
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -24,6 +26,7 @@ const App = () => {
       <Routes>
         <Route path="/signUp" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/rateBuyer/:id" element={<RateForm/>}/>
        {isLoggedIn && <Route path="/profile" element={<Profile/>}/>}
        {isLoggedIn && <Route path="/admin" element={<Admin/>}/>} 
        {isLoggedIn && <Route path="/products" element={<Products/>}/>}  
