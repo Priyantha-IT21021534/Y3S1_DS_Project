@@ -1,9 +1,16 @@
 import React from "react";
-import Frame from "./components/Frame";
+import {Route, Routes, BrowserRouter} from 'react-router-dom'
+import AddProducts from "./components/products/addProduct";
 
 const App = () => {
   return (
-    <Frame />
+    <BrowserRouter>
+    
+      <Routes>
+        <Route path="/addProduct" element={<AddProducts/>}/>
+      </Routes>
+     
+    </BrowserRouter>
   );
 }
 export default App;

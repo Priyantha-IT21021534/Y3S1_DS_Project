@@ -6,7 +6,7 @@ const router = require("./routes/products-routs");
 const app = express();
 
 //declare port
-const PORT = process.env.PORT || 8070;
+const PORT = process.env.PORT || 8082;
 
 //using dependencies
 app.use(cors());
