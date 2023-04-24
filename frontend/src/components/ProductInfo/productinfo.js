@@ -51,7 +51,7 @@ const Productinfo = () => {
     <p>{product.weight}</p>
     
   <div className="amount-container">
-  <button className="remove-button" onclick={() => handleQuantity("dec")}>-</button>
+  <button className="remove-button" onClick={() => handleQuantity("dec")}>-</button>
   <span className="amount">{quantity}</span>
   <button className="add-button" onClick={() => handleQuantity("inc")}>+</button>
 </div>

@@ -56,6 +56,8 @@ const Header = () => {
      <i className="bi bi-cart-fill"></i></div>}</Link>
 
      {isLoggedIn && <Link className="orderHistory" to="./getOrders">Order Hisory</Link>}
+     <br/>
+     <span>{isLoggedIn && <Link to="./profile">Profile</Link>}</span>
         
           </li>
         </ul>

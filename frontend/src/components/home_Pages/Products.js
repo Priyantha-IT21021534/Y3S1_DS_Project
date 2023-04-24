@@ -51,16 +51,13 @@ try{
     </form>
 
 <div className='home-products container'>
-{products.length ? products.map((product, key) => (<div className='a_Product' key={key}>
-<p>Name:{product.name}</p>
-<p>Brand:{product.brand}</p>
-<p>Price:{product.price}</p>
-<p>Weight:{product.weight}</p>
+{products.map((product, key) => (<div className='a_Product' key={key}>
 <p>Image:{product.image}</p>
+<p>Name:{product.name}</p>
 <button className="btn btn-info p-1 me-2" onClick = {()=>navigate(`/getProduct/${product._id}`)}>INFO</button>
 <button className="btn btn-success p-1 me-2" onClick = {()=>navigate(`/rateBuyer/${product._id}`)}>⭐⭐⭐</button>
 
-<br/><br/></div>)) : <p>null</p>}
+<br/><br/></div>))}
 </div>
 </div>
   )
