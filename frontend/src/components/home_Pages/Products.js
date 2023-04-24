@@ -26,8 +26,30 @@ const Products = () => {
     getUsers()
 }, [])
 
+const searchProduct = async(e)=>{
+  e.preventDefault();
+
+  const searchValue = e.target.value;
+try{
+  const {data} = await axios.get(`http://localhost:8070/products/search/?search=${searchValue}`);
+
+  
+        console.log(data)
+        setProducts(data.data.products)
+        
+        
+}catch(err){console.log(err)}
+  
+  
+}
+
   return (
     <div className='home container'>
+
+<form className="form-inline my-2 my-lg-0">
+      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onChange={searchProduct} name="search"/>
+    </form>
+
 <div className='home-products container'>
 {products.length ? products.map((product, key) => (<div className='a_Product' key={key}>
 <p>Name:{product.name}</p>
@@ -38,7 +60,7 @@ const Products = () => {
 <button className="btn btn-info p-1 me-2" onClick = {()=>navigate(`/getProduct/${product._id}`)}>INFO</button>
 <button className="btn btn-success p-1 me-2" onClick = {()=>navigate(`/rateBuyer/${product._id}`)}>⭐⭐⭐</button>
 
-<br/><br/></div>)) : null}
+<br/><br/></div>)) : <p>null</p>}
 </div>
 </div>
   )

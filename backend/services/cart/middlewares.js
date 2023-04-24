@@ -49,7 +49,7 @@ try{
   }
 
   const requireRoleBuyer = async(req, res, next)=> {
-    if (decoded.role === "nuyer") {
+    if (decoded.role === "buyer") {
       next();
     } else {
       res.status(403).json({ message: 'Unauthorized' });

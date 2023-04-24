@@ -63,7 +63,7 @@ const getSearch = async(req, res, next) => {
   }
 
   if(products.length===0){
-    return res.status(200).json({message:'nothing to show'})
+    return res.status(200).json({message:'nothing to show', data: { products }})
   }
 else{
   return res.status(200).json({message: 'Fetched products', data: { products }});
