@@ -14,7 +14,7 @@ const userSchema = new Schema({
 
 
     mobile:{
-        type:String,
+        type:Number,
         required:true
         
     },

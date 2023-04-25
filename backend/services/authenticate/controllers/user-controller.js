@@ -25,10 +25,6 @@ const signUp = async(req, res, next) =>{
         throw Error('All fields must be filled')
       }
 
-      //validate mobile number
-    if(!validator.isMobilePhone(mobile, 'en-SL')){
-      throw Error('Mobile Numbe is not valid')
-    }
       //checking wheather password is valid or not
     if (!validator.isEmail(email)) {
         throw Error('Email not valid')
