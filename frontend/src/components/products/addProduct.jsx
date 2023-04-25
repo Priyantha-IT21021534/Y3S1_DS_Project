@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import '../../assets/images/AddProducts.css';
 
 export default function AddProducts() {
 
@@ -42,7 +43,9 @@ export default function AddProducts() {
   return (
     
     <Container fluid>
+       <h1 className="mb-4">Add Products</h1>
       <Form onSubmit={addProducts}>
+        
         <Row className="mb-3">
           <Form.Group as={Col}  controlId="formBasicName">
             <Form.Label>Name</Form.Label>
