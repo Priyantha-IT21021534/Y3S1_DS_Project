@@ -19,8 +19,6 @@ exports.pingPaymentServer = pingPaymentServer;
 
 
 
-
-
 // Create Dummy Payment
 const dummyCardPayment = async (req, res, next) => {
   var error;

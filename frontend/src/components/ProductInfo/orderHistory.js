@@ -5,13 +5,13 @@ import { useParams } from 'react-router-dom'
 const OrderHistory = () => {
 
     const [orders, setOrders] = useState([])
-    const {userId} = useParams();
+   // const {userId} = useParams();
 
 useEffect(()=>{
 
     const getOrders = async() =>{
 
-        const res = await axios.get(`http://localhost:8020/Order/orderhistory/${userId}`)
+        const res = await axios.get(`http://localhost:8020/Order/orderhistory`)
         setOrders(res.data)
         console.log(res.data)
 

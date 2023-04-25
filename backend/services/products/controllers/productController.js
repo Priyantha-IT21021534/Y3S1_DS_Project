@@ -1,5 +1,17 @@
 const Products = require("../model/products");
-
+const axios= require("axios")
+/*
+const getSellerName = async()=>{
+  try {
+    const response = await axios.get('http://localhost:8090/User/profile');
+    console.log(response)
+    return response.data.name;
+    
+  } catch (error) {
+    console.error(error);
+  }
+}
+*/
 //get all products
 const getAllProducts = async (req, res, next) => {
   let product;
@@ -90,12 +102,14 @@ const getBySellerId = async (req, res, next) => {
 
 //add products
 const addProduct = async (req, res, next) => {
+  //const sellerName = getSellerName();
     const { name, brand, price, weight, upload_date, description, image } =
       req.body;
     let product;
     try {
       product = new Products({
         sellerId:req.userId,//this id, we get it from token
+        sellerName:req.userName,
         name, 
         brand, 
         price,

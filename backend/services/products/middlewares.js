@@ -18,6 +18,8 @@ try{
       console.log("user Id  "+decoded._id)
       req.userId = decoded._id;
       roleOne =  decoded.role;
+      req.userName=decoded.name;
+      console.log(decoded.name)
       console.log(roleOne)
       console.log("req.userId  "+req.userId)
       

@@ -3,7 +3,7 @@ const router = express.Router();
 const productController= require("../controllers/productController");
 const requireAccess  = require("../middlewares")
 
-router.use(requireAccess.requireAuth)
+//router.use(requireAccess.requireAuth)
 
 router.post("/addProduct", requireAccess.requireAuth, requireAccess.requireRoleSeller, productController.addProduct);
 router.get("/getProducts", requireAccess.requireAuth, requireAccess.requireRoleBuyer, productController.getAllProducts);

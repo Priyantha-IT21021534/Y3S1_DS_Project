@@ -9,9 +9,9 @@ const jwt = require('jsonwebtoken');
 
 //Creating a Token to give access to users to user services
 //user id and user's role is passed with token
-const createToken = (_id, role) => {
+const createToken = (_id, role, name) => {
     console.log(process.env.SECRET)
-   return  jwt.sign({_id, role}, process.env.SECRET, {expiresIn: '30m'})
+   return  jwt.sign({_id, role, name}, process.env.SECRET, {expiresIn: '30m'})
 }
 
 
@@ -60,7 +60,7 @@ const signUp = async(req, res, next) =>{
     try{
         await user.save();//saving document(a new user to) into DB
 
-        const token = createToken(user._id, user.role) //calling to createToken function to create a token for user
+        const token = createToken(user._id, user.role, user.name) //calling to createToken function to create a token for user
 
 
         //Create and setting a cookie with the user's ID and token
@@ -113,7 +113,7 @@ const login = async(req, res, next) =>{
          return res.status(400).json({message:"Invalid email/password"})
      }
 //calling to createToken function to create a token for user
-     const token = createToken(loggeduser._id, loggeduser.role) 
+     const token = createToken(loggeduser._id, loggeduser.role, loggeduser.name) 
 
      //Create and setting a cookie with the user's ID and token
      res.cookie(String(loggeduser._id), token, {

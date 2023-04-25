@@ -49,6 +49,7 @@ const Productinfo = () => {
     <p>{product.brand}</p>
     <p>{product.price}</p>
     <p>{product.weight}</p>
+   <p>{product.sellerName}</p><>⭐⭐⭐</>
     
   <div className="amount-container">
   <button className="remove-button" onClick={() => handleQuantity("dec")}>-</button>
