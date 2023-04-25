@@ -5,12 +5,12 @@ let roleOne;
 const requireAuth = async (req, res, next) => {
   try {
     const cookie = req.headers.cookie;
-    if (!null)
-      return res.status(403).send("Login requried!");
+    if (!cookie)
+      return res.status(403).send({message: "Login requried!"});
 
     const token = cookie.split("=")[1];
     if (!token)
-      return res.status(403).send("A token is required for authentication.");
+      return res.status(403).send({message: "A token is required for authentication."});
 
     decoded = jwt.verify(token, process.env.SECRET);
     console.log("user Id  " + decoded._id)

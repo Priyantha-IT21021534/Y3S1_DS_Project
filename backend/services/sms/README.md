@@ -31,6 +31,9 @@ Run - npm run dev
     }
 }
 
+##### Errors
+status codes: 403, 401, 400, 500
+
 ### Vonage Service
 ##### Request
 {

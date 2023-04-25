@@ -5,7 +5,7 @@ let roleOne;
 const requireAuth = async (req, res, next) => {
   try {
     const cookie = req.headers.cookie;
-    if (!null)
+    if (!cookie)
       return res.status(403).send("Login requried!");
 
     const token = cookie.split("=")[1];
