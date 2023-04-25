@@ -29,5 +29,5 @@ connection.once("open", () => {
 });
 
 app.listen(PORT, () => {
-	console.log(`Server is up and running on Port: ${PORT}`)
+	console.log(`Ratings Server is up and running on Port: ${PORT}`)
 });

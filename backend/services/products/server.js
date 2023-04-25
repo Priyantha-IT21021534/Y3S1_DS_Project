@@ -16,7 +16,7 @@ app.use("/products",router)
 const link="mongodb+srv://DS_Project:NIsL73uZpYheSBwR@dscluster.i4dqped.mongodb.net/Product_Service?retryWrites=true&w=majority";
 
 mongoose.connect(link, {
-   useNewUrlParser: true,
+  useNewUrlParser: true,
 	useUnifiedTopology: true
 });
 console.log("Connection status: ", mongoose.connection.readyState);
@@ -28,5 +28,5 @@ connection.once("open", () => {
 
 
 app.listen(PORT, () => {
-	console.log(`Server is up and running on Port: ${PORT}`)
+	console.log(`Products Server is up and running on Port: ${PORT}`)
 });
