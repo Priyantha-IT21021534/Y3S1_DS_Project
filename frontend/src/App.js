@@ -34,6 +34,8 @@ const App = () => {
        {isLoggedIn && <Route path="/cart" element={<Cart/>}/>}
        {isLoggedIn && <Route path="/getOrders" element={<OrderHistory/>}/>}
        {isLoggedIn && <Route path="/admin/viewOrders" element={<ViewOrders/>}/>}
+
+       <Route path="*" element={<h1>Page Not Found</h1>}/>
       </Routes>
       
     </BrowserRouter>
