@@ -117,8 +117,8 @@ const dummyCardPayment = async (req, res, next) => {
     const emailResult = await axios.post("http://localhost:8100/email/sendMail", emaildata);
     const smsResult = await axios.post("http://localhost:8200/sms/sendSms", smsData);
 
-    console.log(emailResult.data);
-    console.log(smsResult.data);
+    // console.log(emailResult.data);
+    // console.log(smsResult.data);
 
     return res.status(200).json({message: "Payment successful. Rs."+ amount});
   }
