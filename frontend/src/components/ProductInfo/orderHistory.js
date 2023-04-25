@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 const OrderHistory = () => {
 
-    const [orders, setOrders] = useState({})
+    const [orders, setOrders] = useState([])
     const {userId} = useParams();
 
 useEffect(()=>{
@@ -14,6 +14,8 @@ useEffect(()=>{
         const res = await axios.get(`http://localhost:8020/Order/orderhistory/${userId}`)
         setOrders(res.data)
         console.log(res.data)
+
+        
     }
 getOrders()
 }, [])
@@ -25,15 +27,20 @@ getOrders()
         <h3>Order Status {order.status}</h3>
 
         <table>
-
+        <thead>
             <th>Name</th>
             <th>Quantity</th>
-        {order.products.map((product, _id)=>(
-            <tr key={product._id}> 
+        </thead>
+
+            <tbody>{order.products.map((product,key)=>(
+            <tr key={key}> 
                 <td>{product.name}</td>
                 <td>{product.quantity}</td>
             </tr>
-        ))}
+        ))}</tbody>
+        
+
+           
         </table>
         </div>))}
         </div>

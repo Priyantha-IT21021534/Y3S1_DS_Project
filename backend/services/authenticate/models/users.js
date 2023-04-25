@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const {roles}= require("./roles")
+//const {roles}= require("./roles")
 
 const userSchema = new Schema({
 
@@ -14,7 +14,7 @@ const userSchema = new Schema({
 
 
     mobile:{
-        type:Number,
+        type:String,
         required:true
         
     },
@@ -38,8 +38,8 @@ const userSchema = new Schema({
 
     role: {
         type: String,
-        enum: [roles.admin, roles.buyer, roles.seller],
-        default: roles.buyer    
+        enum: ["admin", "buyer","seller"],
+        default: "buyer"  
        }
     
 })

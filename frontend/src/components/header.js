@@ -53,9 +53,11 @@ const Header = () => {
      {isLoggedIn && <Link onClick={handleLogout} className='logout' to="./">Log Out</Link>}
 
      <Link to="./cart">{isLoggedIn && <div><span className="badge bg-primary">{quantity}</span>
-     <i class="bi bi-cart-fill"></i></div>}</Link>
+     <i className="bi bi-cart-fill"></i></div>}</Link>
 
      {isLoggedIn && <Link className="orderHistory" to="./getOrders">Order Hisory</Link>}
+     <br/>
+     <span>{isLoggedIn && <Link to="./profile">Profile</Link>}</span>
         
           </li>
         </ul>

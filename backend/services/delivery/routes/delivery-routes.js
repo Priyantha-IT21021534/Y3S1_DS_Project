@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const deliveryController= require("../controllers/deliveryController");
+const deliveryController= require("../middlewares");
 
 
 router.get("/", deliveryController.pingDeliveryServer);
