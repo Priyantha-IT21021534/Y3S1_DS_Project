@@ -9,6 +9,6 @@
     "nodemon": "^2.0.21"
   },
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon products-server.js"
   }
 }
