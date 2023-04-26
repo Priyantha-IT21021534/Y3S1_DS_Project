@@ -16,7 +16,8 @@ Run - npm run dev
 
 #### Request
 {
-    "email":"test@te.tes",
+    "email":"kjpfernandohurricane@gmail.com",
+    "mobile":94763309823,
     "card": {
         "number":9874156298453216,
         "expiration": "05/2025",
@@ -28,5 +29,7 @@ Run - npm run dev
 
 #### Response
 {
-    "message": "Payment successful. Rs.500"
+    "message": "Payment successful. Rs.500",
+    "email": "PASS",
+    "sms": "PASS"
 }

@@ -6,7 +6,7 @@ const requireAuth = async (req, res, next) => {
   try {
     const cookie = req.headers.cookie;
     if (!cookie)
-      return res.status(403).send("Login requried!");
+      return res.status(403).send({message: "Login requried!"});
 
     const token = cookie.split("=")[1];
     if (!token)

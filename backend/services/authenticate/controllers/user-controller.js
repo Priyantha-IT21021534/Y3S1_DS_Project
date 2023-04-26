@@ -16,49 +16,53 @@ const createToken = (_id, role, name) => {
 
 
 //signup function
-const signUp = async(req, res, next) =>{
+const signUp = async (req, res, next) => {
 
-    const {name,  mobile, email,  address, password, role} = req.body;
+  const { name, mobile, email, address, password, role } = req.body;
 
-    //validation for all the input fields
-    if (!name || !mobile || !email || !address || !password) {
-        throw Error('All fields must be filled')
-      }
+  //validation for all the input fields
+  if (!name || !mobile || !email || !address || !password) {
+    throw Error('All fields must be filled')
+  }
 
-      //checking wheather password is valid or not
-    if (!validator.isEmail(email)) {
-        throw Error('Email not valid')
-    }
+  //validate mobile number
+  if (!validator.isMobilePhone(mobile, 'en-SL')) {
+    throw Error('Mobile Numbe is not valid')
+  }
+  //checking wheather password is valid or not
+  if (!validator.isEmail(email)) {
+    throw Error('Email not valid')
+  }
 
-     let existingUser;
-//chaecking whether user already sign up or not based on the email
-     try{
-         existingUser = await User.findOne({email: email});
-     }catch(err){
-         console.log(err);
-     }
-     
-     if(existingUser){
-         return res.status(400).json({message:"User already exist...login instead "})
-     }
+  let existingUser;
+  //chaecking whether user already sign up or not based on the email
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    console.log(err);
+  }
 
-     const salt = await  bcrypt.genSalt(6)
-    //hashsync is a function that can hasing the password
-    const hashedpassword = await bcrypt.hash(password, salt);
+  if (existingUser) {
+    return res.status(400).json({ message: "User already exist...login instead " })
+  }
+
+  const salt = await bcrypt.genSalt(6)
+  //hashsync is a function that can hasing the password
+  const hashedpassword = await bcrypt.hash(password, salt);
 
 
-    //creating a new User
-    const user = new User({
-        name,  
-        mobile, 
-        email,  
-        address,
-        password:hashedpassword,
-        role:role || "buyer"
-    });
+  //creating a new User
+  const user = new User({
+    name,
+    mobile,
+    email,
+    address,
+    password: hashedpassword,
+    role: role || "buyer"
+  });
 
-    try{
-        await user.save();//saving document(a new user to) into DB
+  try {
+    await user.save();//saving document(a new user to) into DB
 
         const token = createToken(user._id, user.role, user.name) //calling to createToken function to create a token for user
 
@@ -71,135 +75,135 @@ const signUp = async(req, res, next) =>{
           sameSite:"lax"
         })
 
-        res.status(201).json({message:user, token})//sending the new user details with token as a message for the response
-    }catch(err){
-        console.log(err);
-        throw new Error('Error saving user');
-    }
+    res.status(201).json({ message: user, token })//sending the new user details with token as a message for the response
+  } catch (err) {
+    console.log(err);
+    throw new Error('Error saving user');
+  }
 
 }
 
 
 //login function
-const login = async(req, res, next) =>{
+const login = async (req, res, next) => {
 
-    const {email, password} = req.body;
+  const { email, password } = req.body;
 
-    //checking whether pasword and login fields are filled or not 
-    if (!email || !password) {
-        throw Error('All fields must be filled')
-      }
+  //checking whether pasword and login fields are filled or not 
+  if (!email || !password) {
+    throw Error('All fields must be filled')
+  }
 
-    let loggeduser;
+  let loggeduser;
 
-    //check whether user is exist on the db, based on the email
-    try{
-        loggeduser = await User.findOne({email:email})
-        
-    }catch(err){
-        return new Error(err);
-    }
+  //check whether user is exist on the db, based on the email
+  try {
+    loggeduser = await User.findOne({ email: email })
 
-    //if user is noth found in the db
-    if(!loggeduser){
-        return res.status(400).json({message:"User not found.Sign up please"})
-    }
+  } catch (err) {
+    return new Error(err);
+  }
 
-     //checking password and comare it with exist user's password in the db
-     const isPasswordCorrect = bcrypt.compareSync(password, loggeduser.password);
+  //if user is noth found in the db
+  if (!loggeduser) {
+    return res.status(400).json({ message: "User not found.Sign up please" })
+  }
 
-     //if password and email are invalid
-     if(!isPasswordCorrect){
-         return res.status(400).json({message:"Invalid email/password"})
-     }
-//calling to createToken function to create a token for user
-     const token = createToken(loggeduser._id, loggeduser.role, loggeduser.name) 
+  //checking password and comare it with exist user's password in the db
+  const isPasswordCorrect = bcrypt.compareSync(password, loggeduser.password);
 
-     //Create and setting a cookie with the user's ID and token
-     res.cookie(String(loggeduser._id), token, {
-      path: "/",
-      expires: new Date(Date.now() + 1000*60*60),
-      httpOnly:true,//if this option isn't here cookie will be visible to the frontend
-      sameSite:"lax"
-    })
+  //if password and email are invalid
+  if (!isPasswordCorrect) {
+    return res.status(400).json({ message: "Invalid email/password" })
+  }
+  //calling to createToken function to create a token for user
+  const token = createToken(loggeduser._id, loggeduser.role)
+
+  //Create and setting a cookie with the user's ID and token
+  res.cookie(String(loggeduser._id), token, {
+    path: "/",
+    expires: new Date(Date.now() + 1000 * 60 * 30),
+    httpOnly: true,//if this option isn't here cookie will be visible to the frontend
+    sameSite: "lax"
+  })
 
 
-     //we send this msg along with the token and user details
-    return res.status(200).json({message:"Successfully logged in", User:loggeduser, token})
+  //we send this msg along with the token and user details
+  return res.status(200).json({ message: "Successfully logged in", User: loggeduser, token })
 
 }
 
 
 //gets own profile details  
-  const getUser = async(req, res, next) =>{
-    const userid = req.userId;//gets user Id from the token
-    let user;
+const getUser = async (req, res, next) => {
+  const userid = req.userId;//gets user Id from the token
+  let user;
 
-    //console.log("user ID (get USER)" + userid)
-  
-    try{
-      //find the password with userId
-        user = await User.findById(userid, "-password"); //this minus operator is used to restrict getting user password.But other details will get                                                     
-     }catch(err){
-        return new Error(err)
-    }
-  
-    //if user not found return this message
-    if(!user){
-        return res.status(404).json({message:"User not found"})
-    }
-    return res.status(200).json({user});//if user is exist
+  //console.log("user ID (get USER)" + userid)
+
+  try {
+    //find the password with userId
+    user = await User.findById(userid, "-password"); //this minus operator is used to restrict getting user password.But other details will get                                                     
+  } catch (err) {
+    return new Error(err)
   }
 
+  //if user not found return this message
+  if (!user) {
+    return res.status(404).json({ message: "User not found" })
+  }
+  return res.status(200).json({ user });//if user is exist
+}
 
-  //get all the users
-  const getUsers = async (req, res, next) => {
-    let users;
 
-    //find all the users
-    try{
-      users = await User.find({});
-  }catch(err){
-      console.log(err)
+//get all the users
+const getUsers = async (req, res, next) => {
+  let users;
+
+  //find all the users
+  try {
+    users = await User.find({});
+  } catch (err) {
+    console.log(err)
   }
 
   //if users are not in db
-  if(!users){
-      res.status(404).json({message:"There are no Users added"})
+  if (!users) {
+    res.status(404).json({ message: "There are no Users added" })
   }
-  else{
-      res.status(200).json({users})//display users if there are users
+  else {
+    res.status(200).json({ users })//display users if there are users
   }
 
-   }
+}
 
 
 //logout function
-   const logout = (req, res, next) => {
-    const userid = req.userId;//request user Id from the token
-    const cookies = req.headers.cookie;//request cookie from the header
+const logout = (req, res, next) => {
+  const userid = req.userId;//request user Id from the token
+  const cookies = req.headers.cookie;//request cookie from the header
 
-    //exttracting token from the cookies
-    const prevToken = cookies.split("=")[1];
+  //exttracting token from the cookies
+  const prevToken = cookies.split("=")[1];
 
-    //if token is not found return this response
-    if (!prevToken) {
-      return res.status(400).json({ message: "Couldn't find token" });
+  //if token is not found return this response
+  if (!prevToken) {
+    return res.status(400).json({ message: "Couldn't find token" });
+  }
+
+  //varifying token using secret key from the environmental variables
+  jwt.verify(String(prevToken), process.env.SECRET, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.status(403).json({ message: "Authentication failed" });//if not verified return this error
     }
 
-    //varifying token using secret key from the environmental variables
-    jwt.verify(String(prevToken), process.env.SECRET, (err, user) => {
-      if (err) {
-        console.log(err);
-        return res.status(403).json({ message: "Authentication failed" });//if not verified return this error
-      }
-
-      //if token is varified return this success message as response
-      res.clearCookie(`${userid}`);
-      req.cookies[`${userid}`] = "";
-      return res.status(200).json({ message: "Successfully Logged Out" });
-    });
-  };
+    //if token is varified return this success message as response
+    res.clearCookie(`${userid}`);
+    req.cookies[`${userid}`] = "";
+    return res.status(200).json({ message: "Successfully Logged Out" });
+  });
+};
 
 //delete Acc
 

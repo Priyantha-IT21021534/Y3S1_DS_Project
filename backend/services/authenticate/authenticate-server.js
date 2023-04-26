@@ -23,7 +23,7 @@ const link="mongodb+srv://DS_Project:NIsL73uZpYheSBwR@dscluster.i4dqped.mongodb.
 
 mongoose.connect(link, {
     useNewUrlParser: true,
-     useUnifiedTopology: true
+    useUnifiedTopology: true
  });
 
  
@@ -33,5 +33,5 @@ mongoose.connect(link, {
  });
  
  app.listen(PORT, () => {
-     console.log(`Server is up and running on Port: ${PORT}`)
+     console.log(`Authentication Server is up and running on Port: ${PORT}`)
  });

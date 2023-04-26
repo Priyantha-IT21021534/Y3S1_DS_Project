@@ -56,9 +56,6 @@ const sendSms = async (req, res, next) => {
 exports.sendSms = sendSms;
 
 
-
-
-
 // Send Dummy sms
 const sendDummySms = async (req, res, next) => {
 
@@ -102,14 +99,12 @@ const sendDummySms = async (req, res, next) => {
 
     setTimeout(()=>{
       if(isError){
-        console.log(`SMS Failed!\n${reason}\n${JSON.stringify(data, null, 2)}`);
         return res.status(code).json({
           message: "SMS Failed!",
           reason: reason,
           data: data
         });
       }else{
-        console.log(`Message Sent Successfully\n${JSON.stringify(data, null, 2)}`);
         return res.status(200).json({
           message: "SMS succesful!",
           data: data
