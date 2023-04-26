@@ -4,8 +4,7 @@
   "description": "",
   "main": "sms-server.js",
   "scripts": {
-    "start": "node sms-server.js",
-    "dev": "nodemon sms-server.js"
+    "start": "nodemon sms-server.js"
   },
   "author": "Priyantha Fernando",
   "license": "ISC",

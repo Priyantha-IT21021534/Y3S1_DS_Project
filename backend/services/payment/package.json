@@ -4,8 +4,7 @@
   "description": "",
   "main": "payment-server.js",
   "scripts": {
-    "start": "node payment-server.js",
-    "dev": "nodemon payment-server.js"
+    "start": "nodemon payment-server.js"
   },
   "keywords": [],
   "author": "Priyantha Fernando",

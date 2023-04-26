@@ -9,7 +9,6 @@
     "nodemon": "^2.0.22"
   },
   "scripts": {
-    "start": "node cart-server.js",
-    "dev": "nodemon cart-server.js"
+    "start": "nodemon cart-server.js"
   }
 }

@@ -13,7 +13,6 @@
     "validator": "^13.9.0"
   },
   "scripts": {
-    "start": "node authenticate-server.js",
-    "dev": "nodemon authenticate-server.js"
+    "start": "nodemon authenticate-server.js"
   }
 }

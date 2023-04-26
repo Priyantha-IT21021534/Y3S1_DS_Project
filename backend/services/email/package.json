@@ -4,8 +4,7 @@
   "description": "",
   "main": "email-server.js",
   "scripts": {
-    "start": "node email-server.js",
-    "dev": "nodemon email-server.js"
+    "start": "nodemon email-server.js"
   },
   "author": "Priyantha Fernando",
   "license": "ISC",

@@ -4,8 +4,7 @@
   "description": "",
   "main": "delivery-server.js",
   "scripts": {
-    "start": "node delivery-server.js",
-    "dev": "nodemon delivery-server.js"
+    "start": "nodemon delivery-server.js"
   },
   "keywords": [],
   "author": "Priyantha Fernando",
