@@ -13,7 +13,6 @@ export default function UpdateProducts() {
   const { id } = useParams();
   const [products, setProducts] = useState({
         name: "", 
-        date:"",
         brand: "",
         price: "",
         weight: "",
@@ -27,7 +26,7 @@ export default function UpdateProducts() {
       axios
       .get(`http://localhost:8070/products/getProduct/${id}`).then((res) => {
         setProducts(res.data.product);
-        console.log(res.data);
+        //console.log(res.data);
       });
     };
     getProductById();
@@ -35,30 +34,19 @@ export default function UpdateProducts() {
 
   const handleChangeText = (name, val) => {
     setProducts({ ...products, [name]: val.target.value });
-    console.log(products);
+   // console.log(products);
   };
 
-  function setDateFormat(){                      
-    var theDate = new Date(products.date);
-    var year = theDate.getFullYear();
-    var month = theDate.getMonth() + 1;
-    var day = theDate.getDate();
-    if(month < 10)
-        month = "0" + month;
-    if(day < 10)
-        day = "0" + day;
-    theDate = year +"-"+ month +"-"+ day;
-    return theDate;
-}
+ 
 
   const UpdateProducts = (e) => {
     e.preventDefault();
     console.log("submit");
     axios
-      .put(`http://localhost:8082/products/updateProduct/${id}`, products)
+      .put(`http://localhost:8070/products/:sellerId/updateProduct/${id}`, products)
       .then(() => {
         swal.fire(` successfully updated `);
-        navigate("/");
+        navigate("/profile");
       })
       .catch((error) => {
         console.log(error);
@@ -128,7 +116,7 @@ export default function UpdateProducts() {
             <Form.Control 
                 name="upload_date"
                 type="date" 
-                value={setDateFormat()}  
+                value={products.date}  
                 title="Upload Date must be required"
                 required
                 onChange={(val) => handleChangeText("upload_date", val)}/>

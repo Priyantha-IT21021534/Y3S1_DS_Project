@@ -14,7 +14,8 @@ import ViewOrders from "./components/ProductInfo/viewOrders";
 import RateForm from "./components/rate&Review/RateForm";
 import AddProducts from "./components/products/addProduct";
 import UpdateProducts from "./components/products/updateProduct";
-
+import UpdateACC from "./components/Profile/updateProfile";
+import UpdatePWD from "./components/Profile/updatePWD";
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -38,6 +39,8 @@ const App = () => {
        {isLoggedIn && <Route path="/admin/viewOrders" element={<ViewOrders/>}/>}
        {isLoggedIn && <Route path="/addProduct" element={<AddProducts/>}/>}
        {isLoggedIn && <Route path="/updateProduct/:id" element={<UpdateProducts/>}/>}
+       {isLoggedIn && <Route path="/updateUser/:id" element={<UpdateACC/>}/>}
+       {isLoggedIn && <Route path="/updatePWD/:id" element={<UpdatePWD/>}/>}
 
        <Route path="*" element={<h1>Page Not Found</h1>}/>
       </Routes>
