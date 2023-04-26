@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import AddProducts from "./components/products/addProduct";
+import UpdateProducts from "./components/products/updateProduct";
 import "./App.css";
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/addProduct" element={<AddProducts />} />
+          <Route path="/updateProduct/:_id" element={<UpdateProducts/>}/>
         </Routes>
       </BrowserRouter>
       <footer className="footer">
