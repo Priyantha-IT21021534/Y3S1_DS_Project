@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import AddProducts from "./components/products/addProduct";
 import UpdateProducts from "./components/products/updateProduct";
+import DummyPayment from "./components/payment/dummyPayment";
 import "./App.css";
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
         <Routes>
           <Route path="/addProduct" element={<AddProducts />} />
           <Route path="/updateProduct/:_id" element={<UpdateProducts/>}/>
+          <Route path="/dummyPayemnt" element={<DummyPayment />} />
         </Routes>
       </BrowserRouter>
       <footer className="footer">
