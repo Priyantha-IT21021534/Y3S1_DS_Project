@@ -64,16 +64,16 @@ const Cart = () => {
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
-        <h1>Shopping Cart</h1>
+        <h1>Shopping Cart</h1><br></br>
         <table>
           <th>
             <center>Product</center>
           </th>
           <th>
-            <center>Price</center>
+            <center>Quantity</center>
           </th>
           <th>
-            <center>Quantity</center>
+            <center>Price</center>
           </th>
 
           {cart.products.map((product) => (
@@ -86,7 +86,9 @@ const Cart = () => {
             </tbody>
           ))}
           <tfoot>
-            <h1>Order Summary</h1>
+            <br></br><br></br>
+            <h2>Order Summary</h2>
+            <br></br>
             <tr>
               <th className="cart-total">Cart Total:</th>
               <td className="cart-total">
@@ -127,24 +129,4 @@ const Cart = () => {
 
 export default Cart;
 
-/*<label>Address</label>
-  <input type="address"/>
 
-
-  div class="form-check">
-        <h1>SHIPPING WITH ANONYMOUS</h1>
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-  <label class="form-check-label" for="flexRadioDefault1">
-    SLOW DELIVERY
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
-  <label class="form-check-label" for="flexRadioDefault2">
-  FAST DELIVERY
-  </label>
-<br/>
-  
-</div>
-
-*/
