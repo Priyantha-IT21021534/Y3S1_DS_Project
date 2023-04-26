@@ -24,6 +24,7 @@ const Register = () => {
       ...prevState, 
       [e.target.name] : e.target.value
     }))
+
   }
 
   const sendData = async() =>{

@@ -10,9 +10,10 @@ import Container from 'react-bootstrap/Container';
 
 export default function UpdateProducts() {
 
-  const { _id } = useParams();
+  const { id } = useParams();
   const [products, setProducts] = useState({
         name: "", 
+        date:"",
         brand: "",
         price: "",
         weight: "",
@@ -24,25 +25,37 @@ export default function UpdateProducts() {
   useEffect(() => {
     const getProductById = () => {
       axios
-      .get(`http://localhost:8082/products/getId/${_id}`).then((res) => {
-        setProducts(res.data);
+      .get(`http://localhost:8070/products/getProduct/${id}`).then((res) => {
+        setProducts(res.data.product);
         console.log(res.data);
       });
     };
     getProductById();
-  }, []);
+  }, [id]);
 
   const handleChangeText = (name, val) => {
     setProducts({ ...products, [name]: val.target.value });
     console.log(products);
   };
 
-  
+  function setDateFormat(){                      
+    var theDate = new Date(products.date);
+    var year = theDate.getFullYear();
+    var month = theDate.getMonth() + 1;
+    var day = theDate.getDate();
+    if(month < 10)
+        month = "0" + month;
+    if(day < 10)
+        day = "0" + day;
+    theDate = year +"-"+ month +"-"+ day;
+    return theDate;
+}
+
   const UpdateProducts = (e) => {
     e.preventDefault();
     console.log("submit");
     axios
-      .put(`http://localhost:8082/products/updateProduct/${_id}`, products)
+      .put(`http://localhost:8082/products/updateProduct/${id}`, products)
       .then(() => {
         swal.fire(` successfully updated `);
         navigate("/");
@@ -60,7 +73,7 @@ export default function UpdateProducts() {
         <Form.Label>ID</Form.Label>
             <Form.Control 
                type="text" 
-               value={_id} disabled 
+               value={id} disabled 
                 />
       </Form.Group>
         <Row className="mb-3">
@@ -115,7 +128,7 @@ export default function UpdateProducts() {
             <Form.Control 
                 name="upload_date"
                 type="date" 
-                value={products.upload_date}  
+                value={setDateFormat()}  
                 title="Upload Date must be required"
                 required
                 onChange={(val) => handleChangeText("upload_date", val)}/>

@@ -59,10 +59,20 @@ try{
   
 }
 
+const requireRoleBuyerOrSeller = async(req, res, next)=> {
+  if (decoded.role === "buyer" || decoded.role === "seller") {
+    next();
+  } else {
+    res.status(403).json({ message: 'Unauthorized' });
+  }
+
+}
 
 
 
-exports.requireAuth = requireAuth
+
+exports.requireAuth = requireAuth;
 exports.requireRoleSeller = requireRoleSeller;
 exports.requireRoleAdmin = requireRoleAdmin;
 exports.requireRoleBuyer = requireRoleBuyer;
+exports.requireRoleBuyerOrSeller = requireRoleBuyerOrSeller

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
@@ -23,14 +23,13 @@ export default function AddProducts() {
 
   const handleChangeText = (name, value) => {
     setProducts({ ...products, [name]: value.target.value });
-    console.log(products);
   };
 
   const addProducts = (e) => {
     e.preventDefault();
     console.log("submit");
     axios
-      .post("http://localhost:8082/products/addProduct", products)
+      .post("http://localhost:8070/products/addProduct", products)
       .then(() => {
         swal.fire(`successfully added`);
         navigate("/");

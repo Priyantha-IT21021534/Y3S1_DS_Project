@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import swal from 'sweetalert';
+import {Link, useNavigate} from 'react-router-dom'
 axios.defaults.withCredentials = true;
 
 const Profile = () =>{
 
   const [user, setUser] = useState();
   const [products, setProducts] = useState([]);
+
+  const navigate = useNavigate();
 
   const sendRequest = async() =>{
     const res = await axios.get("http://localhost:8090/User/profile", {
@@ -82,7 +85,7 @@ const Profile = () =>{
       </div>)}
 <br/>
 
-<button className="btn btn-primary p-1 me-2">ADD PRODUCT</button>
+<button className="btn btn-primary p-1 me-2"><Link to="/addProduct">ADD PRODUCT</Link></button>
       <h2><center>MY PRODUCTS</center></h2>
       <table className="table">
   <thead className="thead-dark">  
@@ -109,7 +112,7 @@ const Profile = () =>{
             <td><center>{myProduct.price}</center></td>
             <td><center>{myProduct.description}</center></td>
             <td><center>{myProduct.weight}</center></td>
-            <th><center><button className="btn btn-info p-1 me-2">Update</button>
+            <th><center><button className="btn btn-info p-1 me-2" onClick={()=>navigate(`/updateProduct/${myProduct._id}`)}>Update</button>
               <button className="btn btn-danger p-1 me-2" onClick={()=>handleDelete(myProduct._id)}>Delete</button></center></th>
           </tr>
         ))}

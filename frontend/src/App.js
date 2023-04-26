@@ -12,6 +12,8 @@ import Cart from "./components/ProductInfo/cart";
 import OrderHistory from "./components/ProductInfo/orderHistory";
 import ViewOrders from "./components/ProductInfo/viewOrders";
 import RateForm from "./components/rate&Review/RateForm";
+import AddProducts from "./components/products/addProduct";
+import UpdateProducts from "./components/products/updateProduct";
 
 import { useSelector } from "react-redux";
 
@@ -34,6 +36,8 @@ const App = () => {
        {isLoggedIn && <Route path="/cart" element={<Cart/>}/>}
        {isLoggedIn && <Route path="/getOrders" element={<OrderHistory/>}/>}
        {isLoggedIn && <Route path="/admin/viewOrders" element={<ViewOrders/>}/>}
+       {isLoggedIn && <Route path="/addProduct" element={<AddProducts/>}/>}
+       {isLoggedIn && <Route path="/updateProduct/:id" element={<UpdateProducts/>}/>}
 
        <Route path="*" element={<h1>Page Not Found</h1>}/>
       </Routes>
@@ -41,9 +45,9 @@ const App = () => {
     </BrowserRouter>
   );
 }
-/*
-export default App;
 
+export default App;
+/*
     <div className="App">
       <header className="header">
         <div className="header__logo">
