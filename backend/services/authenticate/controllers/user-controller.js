@@ -11,7 +11,7 @@ const jwt = require('jsonwebtoken');
 //user id and user's role is passed with token
 const createToken = (_id, role, name) => {
     console.log(process.env.SECRET)
-   return  jwt.sign({_id, role, name}, process.env.SECRET, {expiresIn: '30m'})
+   return  jwt.sign({_id, role, name}, process.env.SECRET, {expiresIn: '60m'})
 }
 
 
@@ -66,7 +66,7 @@ const signUp = async(req, res, next) =>{
         //Create and setting a cookie with the user's ID and token
         res.cookie(String(user._id), token, {
           path: "/",
-          expires: new Date(Date.now() + 1000*60*30),
+          expires: new Date(Date.now() + 1000*60*60),
           httpOnly:true,//if this option isn't here cookie will be visible to the frontend
           sameSite:"lax"
         })
@@ -118,7 +118,7 @@ const login = async(req, res, next) =>{
      //Create and setting a cookie with the user's ID and token
      res.cookie(String(loggeduser._id), token, {
       path: "/",
-      expires: new Date(Date.now() + 1000*60*30),
+      expires: new Date(Date.now() + 1000*60*60),
       httpOnly:true,//if this option isn't here cookie will be visible to the frontend
       sameSite:"lax"
     })
@@ -201,20 +201,82 @@ const login = async(req, res, next) =>{
     });
   };
 
-/*
+//delete Acc
+
+const deleteUser = async(req, res) =>{
+  try{
+    await User.findByIdAndDelete(req.userId)
+
+    res.clearCookie(`${req.userId}`);
+    req.cookies[`${req.userId}`] = "";
+    res.json({message:"Account deleted successfully!!"})
+  }catch(err){
+    console.log(err)
+    res.status(500).json({message:"Error in deleting you account"})
+  }
+}
+
+
+//update Acc
+const updateProfile = async (req, res, next) => {
+  const userId = req.userId;
+  const { name,  mobile, email,  address } = req.body;
+  let user;
+
+  if (!name || !mobile || !email || !address) {
+    throw Error('All fields must be filled')
+  }
+
+  //checking wheather password is valid or not
+if (!validator.isEmail(email)) {
+    throw Error('Email not valid')
+}
+
+  let existingUser;
+//chaecking whether user already sign up or not based on the email
+     try{
+         existingUser = await User.findOne({email: email});
+     }catch(err){
+         console.log(err);
+     }
+     
+     if(existingUser){
+         return res.status(400).json({message:"This email is already exists. use a different email. "})
+     }
+  try {
+    user = await User.findByIdAndUpdate(userId, {
+      name,  
+      mobile, 
+      email,  
+      address
+    });
+    user = await user.save();
+  } catch (err) {
+    console.log(err);
+  }
+  if (!user) {
+    return res.status(404).json({ message: "Unable to Update by id" });
+  }
+  return res.status(200).json({ user });
+};
+
   //update the password
   const updatePassword = async(req, res, next)=>{
-    const userId= req.params.userId;//request user Id from the url
-    const newPassword = req.body.newPassword;
+    const userId= req.userId;//request user Id from the url
+    const {password} = req.body;
+
+    if(!password){
+      throw Error('Password should be field')
+    }
 
     const salt = await  bcrypt.genSalt(6)
     //hashsync is a function that can hasing the password
-    const hashednewpassword = await bcrypt.hash(newPassword, salt);
+    const hashednewpassword = await bcrypt.hash(password, salt);
 
     try{
       //check whether user is exist in the db
       const user = await User.findByIdAndUpdate(userId,
-        {newPassword:hashednewpassword},{new:true})
+        {password:hashednewpassword},{new:true})
 
         if(!user){
           return res.status(404).json({message:"User not found!"})
@@ -226,11 +288,13 @@ const login = async(req, res, next) =>{
       res.status(500).json({ message: "Error updating password" });
     }
   }
-*/
+
 exports.signUp = signUp;
 exports.login = login;
 exports.getUser = getUser;
 exports.getUsers = getUsers;
 exports.logout = logout;
-//exports.updatePassword = updatePassword
+exports.deleteUser = deleteUser;
+exports.updateProfile = updateProfile;
+exports.updatePassword = updatePassword
 

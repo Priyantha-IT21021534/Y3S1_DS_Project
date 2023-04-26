@@ -1,4 +1,4 @@
-const { signUp, login, getUsers, getUser, logout, updatePassword } = require("../controllers/user-controller");
+const { signUp, login, getUsers, getUser, logout, updatePassword, deleteUser, updateProfile } = require("../controllers/user-controller");
 
 const {requireAuth, requireRoleAdmin} = require("../middlewares")
 
@@ -10,7 +10,9 @@ router.post("/login", login);
 router.get("/users", requireAuth, requireRoleAdmin, getUsers);
 router.get("/profile", requireAuth, getUser)
 router.post("/logout", requireAuth, logout);
-//router.put("/update/:userId", requireAuth, updatePassword)
+router.delete("/deleteUser", requireAuth, deleteUser)
+router.patch("/update", requireAuth, updateProfile)
+router.patch("/update/pwd", requireAuth, updatePassword)
 
 
 module.exports = router;

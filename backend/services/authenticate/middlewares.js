@@ -7,6 +7,11 @@ const requireAuth = async(req, res, next) => {
    
 try{
     const cookie = req.headers.cookie;
+
+    if(!cookie){
+      return res.status(403).send("Please login or sign Up first");
+    }
+
     const token = cookie.split("=")[1];
     
       if(!token){
