@@ -1,5 +1,17 @@
 const Products = require("../model/products");
-
+const axios= require("axios")
+/*
+const getSellerName = async()=>{
+  try {
+    const response = await axios.get('http://localhost:8090/User/profile');
+    console.log(response)
+    return response.data.name;
+    
+  } catch (error) {
+    console.error(error);
+  }
+}
+*/
 //get all products
 const getAllProducts = async (req, res, next) => {
   let product;
@@ -26,7 +38,7 @@ const getById = async (req, res, next) => {
   if (!product) {
     return res.status(404).json({ message: "No product found" });
   }
-  return res.status(200).json(product);
+  return res.status(200).json({product});
 };
 
 //search products using name, or supplier, brand
@@ -63,7 +75,7 @@ const getSearch = async(req, res, next) => {
   }
 
   if(products.length===0){
-    return res.status(200).json({message:'nothing to show'})
+    return res.status(200).json({message:'nothing to show', data: { products }})
   }
 else{
   return res.status(200).json({message: 'Fetched products', data: { products }});
@@ -75,27 +87,29 @@ else{
 
 //get products by sellerId
 const getBySellerId = async (req, res, next) => {
-  const id = req.userId;
-  let product;
+  const id = req.userId;//this is the user's ID. which is get from the jwt token
+  let products;
   try {
-    product = await Products.findById(id);
+    products = await Products.find({sellerId:id});
   } catch (err) {
     console.log(err);
   }
-  if (!product) {
+  if (!products) {
     return res.status(404).json({ message: "No product found" });
   }
-  return res.status(200).json(product);
+  return res.status(200).json(products);
 };
 
 //add products
 const addProduct = async (req, res, next) => {
+  //const sellerName = getSellerName();
     const { name, brand, price, weight, upload_date, description, image } =
       req.body;
     let product;
     try {
       product = new Products({
-        sellerId:req.userId,
+        sellerId:req.userId,//this id, we get it from token
+        sellerName:req.userName,
         name, 
         brand, 
         price,
@@ -160,7 +174,8 @@ const deleteProduct = async (req, res, next) => {
   exports.getById = getById;
   exports.updateProduct = updateProduct;
   exports.deleteProduct = deleteProduct;
-  exports.getSearch = getSearch
+  exports.getSearch = getSearch;
+  exports.getBySellerId = getBySellerId
 
 
   

@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/images/AyuLogo.png";
+//import logo from "../assets/images/AyuLogo.png";
 
 export default function Frame() {
   return <div>
