@@ -28,11 +28,24 @@ export default function AddPayment() {
     //console.log(payments);
   };
 
+const newPayment = {
+  email:payments.email,
+  mobile:payments.mobile,
+  card:{
+    number:payments.number,
+    expiration:payments.expiration,
+    cvv:payments.cvv,
+    name:payments.name
+  },
+  amount:payments.amount
+
+}
+
   const AddPayment = (e) => {
     e.preventDefault();
     console.log("submit");
     axios
-      .post("http://localhost:8500/payment/card", payments)
+      .post("http://localhost:8500/payment/card", newPayment)
       .then(() => {
         swal.fire(` Payment Scussesful `);
         navigate("/getOrders");
@@ -124,8 +137,7 @@ export default function AddPayment() {
                 type="number" 
                 placeholder="Amount"   
                 title="Amount must be required"
-                disabled
-                value={cart.withCommision}/>
+                />
       </Form.Group>  
 
           <Button variant="primary" type="submit">
