@@ -61,7 +61,7 @@ const Products = () => {
           
           <div className="product-tile" key={key}>
             
-            <p>Image:{product.image}</p>
+            <img src={product.image}/>
             <p>Name:{product.name}</p>
             <button
               className="btn btn-info p-1 me-2"
