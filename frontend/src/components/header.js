@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useEffect, useState} from 'react'
 import '../assets/styles/header.css'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -13,7 +13,7 @@ const Header = () => {
     const quantity = useSelector((state) => state.cart.quantity)
 
     //console.log(cart)
-
+    const [role, setRole] = useState('')
     const dispatch = useDispatch();
     const sendLogoutReq = async()=>{
 
@@ -29,6 +29,18 @@ const Header = () => {
             sendLogoutReq().then(() => dispatch(authActions.logout()));
           };
 
+          useEffect(() => {
+            const getProductById = () => {
+              axios
+              .get(`http://localhost:8090/User/profile`).then((res) => {
+                setRole(res.data.user.role);
+                console.log(res.data.user.role)
+                //console.log(res.data);
+              });
+            };
+            getProductById();
+          }, [isLoggedIn]);
+          console.log(role)
   return (
     <div>
     <header className="header">
@@ -52,12 +64,12 @@ const Header = () => {
           <li className="header__item">
      {isLoggedIn && <Link onClick={handleLogout} className='logout' to="./">Log Out</Link>}
 
-     <Link to="./cart">{isLoggedIn && <div><span className="badge bg-primary">{quantity}</span>
+     <Link to="./cart">{isLoggedIn && role === 'buyer' && <div><span className="badge bg-primary">{quantity}</span>
      <i className="bi bi-cart-fill"></i></div>}</Link>
 
-     {isLoggedIn && <Link className="orderHistory" to="./getOrders">Order Hisory</Link>}
+     {isLoggedIn && role === 'buyer' &&<Link className="orderHistory" to="./getOrders">Order Hisory</Link>}
      <br/>
-     <span>{isLoggedIn && <Link to="./profile">Profile</Link>}</span>
+     <span>{isLoggedIn && role === 'buyer' &&<Link to="./profile">Profile</Link>}</span>
         
           </li>
         </ul>

@@ -1,20 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from "axios"
 import '../../assets/styles/Forms.css'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
-import { authActions } from '../Store';
-const Register = () => {
+import swal from 'sweetalert'
+import { useNavigate, useParams } from 'react-router-dom'
+const UpdateACC= () => {
 
+
+  const id = useParams()
   const navigate = useNavigate();
-  const dispatch = useDispatch()
   const [inputs, setInputs] = useState({
     name:"",
     mobile:"",
     email:"",
-    address:"",
-    role:"",
-    password:""
+    address:""
   })
 
  
@@ -27,15 +25,38 @@ const Register = () => {
 
   }
 
+
+  useEffect(()=>{
+      const getUser = async() => {
+          try {
+             await axios.get("http://localhost:8090/User/profile").then((res)=>{
+                setInputs(res.data.user)
+                console.log(res.data.user)
+            })} catch (err) {
+              console.log(err)
+            }
+          }
+      getUser()
+  }, [id])
+
   const sendData = async() =>{
 
-    const res = await axios.post("http://localhost:8090/User/signUp", {
+    const res = await axios.patch("http://localhost:8090/User/update", {
       name:inputs.name,
       mobile:inputs.mobile,
       email:inputs.email,
-      address:inputs.address,
-      role:inputs.role,
-      password:inputs.password,
+      address:inputs.address
+    }).then((err)=>{swal({
+        title: "Item updated!",
+    
+        icon: "success",
+        button: "OK" ,
+        timer : 3000
+       
+      });
+    
+      navigate("/profile")
+
     }).catch((err)=>console.log(err));
 
     const data = await res.data;
@@ -46,13 +67,13 @@ const Register = () => {
   const handleSubmit = (e) =>{
     e.preventDefault();
     console.log(inputs)
-    sendData().then(() => dispatch(authActions.login())).then(()=>navigate("/profile"))
+    sendData().then(()=>navigate("/profile"))
   }
 
   return (
     <div className='forms'>
 
-      <h1>Register</h1>
+      <h1>Update Account Details</h1>
       <form onSubmit={handleSubmit}>
 
         <div className='inputs'>
@@ -78,24 +99,9 @@ const Register = () => {
         <input type="text" name='address' value={inputs.address} onChange={handleChange}/>
         </div>
         
-        <div className='inputs'>
-        <label>Choose your Role:</label>
-
-          <select name='select' value={inputs.role} onChange={handleChange}>
-            <option>Select the Role</option>
-            <option value="buyer"> I am a buyer</option>
-            <option value="seller">I am a seller</option>
-          </select>
-
-        </div>
-
-        <div className='inputs'>
-        <label>Password:</label>
-        <input type="password" name="password" value={inputs.password} onChange={handleChange}/>
-        </div>
         
         <div className='inputs'>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Update</button>
         </div>
         
         
@@ -104,4 +110,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default UpdateACC

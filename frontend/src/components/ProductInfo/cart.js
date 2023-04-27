@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import "../../assets/styles/cart.css";
-import axios from "axios";
-import StripeCheckout from "react-stripe-checkout";
-
-const KEY =
-  "pk_test_51Moj0FA7YwNcizC88oNYnMH4OcCJvyfQSkTeiYWciqgdOfEPg5B74X0EEKSvFZD8dBog2ovsE6ZHpft5J8Avswah00Z0Ep11s4";
+import React from 'react'
+import { useSelector } from 'react-redux'
+import '../../assets/styles/cart.css'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
 
-  const [stripeToken, setStripeToken] = useState(null);
+  const navigate = useNavigate();
+
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -109,17 +107,8 @@ const Cart = () => {
         <br />
         <br />
 
-        <StripeCheckout
-          name="Ayu Shop"
-          image
-          src="https://i.postimg.cc/d3qbx7SW/AyuLogo.png"
-          description={`Your total is Rs. ${cart.total}`}
-          amount={cart.total * 100}
-          token={onToken}
-          stripeKey={KEY}
-        >
-          <button type="submit">CheckOut</button>
-        </StripeCheckout>
+        <button type="submit">CheckOut with Stripe</button>
+        <button type="submit" onClick={() => navigate('/dummyPayment')}>CheckOut with Dummy</button>
       </form>
     </div>
   );

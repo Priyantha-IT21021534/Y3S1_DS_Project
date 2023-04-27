@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { addProduct } from '../Store';
 import { useDispatch } from 'react-redux';
 
@@ -9,6 +9,8 @@ const Productinfo = () => {
     const [product, setProduct] = useState({});
     const [quantity, setQuantity] = useState(1)
     const { id } = useParams();
+
+    const navigate = useNavigate();
   
     const dispatch = useDispatch()
 
@@ -49,7 +51,7 @@ const Productinfo = () => {
     <p>{product.brand}</p>
     <p>{product.price}</p>
     <p>{product.weight}</p>
-   <p>{product.sellerName}</p><>⭐⭐⭐</>
+   <p>{product.sellerName}⭐⭐⭐➡️<button className='btn btn-info p-1 me-2 btn-small-width' onClick={()=>navigate(`/rateSeller/${product.sellerName}/${product.sellerId}`)}>Rate This seller</button></p>
     
   <div className="amount-container">
   <button className="remove-button" onClick={() => handleQuantity("dec")}>-</button>
