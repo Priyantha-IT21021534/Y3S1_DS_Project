@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate} from "react-router-dom";
+import { useSelector } from 'react-redux'
 import swal from "sweetalert2";
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
@@ -11,6 +12,7 @@ import Container from 'react-bootstrap/Container';
 
 export default function AddPayment() {
 
+  const cart = useSelector((state) => state.cart)
   const [payments, setPayemtns] = useState({
         email: "", 
         mobile: "",
@@ -18,22 +20,22 @@ export default function AddPayment() {
         expiration: "",
         cvv: "",
         name: "",
-        amount: "",
+        amount:"",
   });
 
   const handleChangeText = (name, value) => {
     setPayemtns({ ...payments, [name]: value.target.value });
-    console.log(payments);
+    //console.log(payments);
   };
 
   const AddPayment = (e) => {
     e.preventDefault();
     console.log("submit");
     axios
-      .post("http://localhost:8500/payment/card",payments)
+      .post("http://localhost:8500/payment/card", payments)
       .then(() => {
         swal.fire(` Payment Scussesful `);
-        navigate("/");
+        navigate("/getOrders");
       })
       .catch((error) => {
         console.log(error);
@@ -71,22 +73,22 @@ export default function AddPayment() {
         </Row> 
         <Row className="mb-3">
           <Form.Group as={Col}  controlId="formBasicNumber">
-            <Form.Label>Number</Form.Label>
+            <Form.Label>Credit Card Number</Form.Label>
             <Form.Control 
                 name="number"
-                type="number" 
-                placeholder="Number"   
+                type="text" 
+                placeholder="xxxx xxxx xxxx xxxx"   
                 title="Number must be required"
                 required
                 onChange={(val) => handleChangeText("number", val)}/>
             
           </Form.Group>
           <Form.Group as={Col} controlId="formBasicExpiration">
-            <Form.Label>Expiration</Form.Label>
+            <Form.Label>Expire In</Form.Label>
             <Form.Control 
                 name="expiration"
                 type="text" 
-                placeholder="Expiration"   
+                placeholder="eg:01/25(mm/yy)"   
                 title="expiration must be required"
                 required
                 onChange={(val) => handleChangeText("expirationt", val)}/>
@@ -94,11 +96,11 @@ export default function AddPayment() {
         </Row> 
         <Row className="mb-3">
           <Form.Group as={Col}  controlId="formBasicCCV">
-            <Form.Label>CCV</Form.Label>
+            <Form.Label>CVV</Form.Label>
             <Form.Control 
                 name="ccv"
                 type="number" 
-                placeholder="Upload Date"   
+                placeholder="CVV"   
                 title="Upload Date must be required"
                 required
                 onChange={(val) => handleChangeText("ccv", val)}/>
@@ -116,14 +118,14 @@ export default function AddPayment() {
           </Form.Group>
         </Row> 
         <Form.Group className="mb-3" controlId="formGroupAmount">
-        <Form.Label>Amount</Form.Label>
+        <Form.Label>Amount (Rs. )</Form.Label>
             <Form.Control 
                 name="amount"
                 type="number" 
                 placeholder="Amount"   
                 title="Amount must be required"
-                required
-                onChange={(val) => handleChangeText("amount", val)}/>
+                disabled
+                value={cart.withCommision}/>
       </Form.Group>  
 
           <Button variant="primary" type="submit">

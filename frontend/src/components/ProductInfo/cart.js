@@ -2,8 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import '../../assets/styles/cart.css'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
+
+    const navigate = useNavigate();
 
     const cart = useSelector((state) => state.cart)
 
@@ -81,7 +84,8 @@ const Cart = () => {
       <br/>
       
 
-<button type="submit">CheckOut</button>
+<button type="submit">CheckOut with Stripe</button>
+<button type="submit" onClick={()=>navigate('/dummyPayment')}>CheckOut with Dummy</button>
 </form>
     </div>
   

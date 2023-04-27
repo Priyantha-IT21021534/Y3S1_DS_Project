@@ -16,6 +16,8 @@ import AddProducts from "./components/products/addProduct";
 import UpdateProducts from "./components/products/updateProduct";
 import UpdateACC from "./components/Profile/updateProfile";
 import UpdatePWD from "./components/Profile/updatePWD";
+import AddPayment from "./components/payment/dummyPayment";
+import RateFormSeller from "./components/rate&Review/RateFormSeller";
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -29,7 +31,7 @@ const App = () => {
       <Routes>
         <Route path="/signUp" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/rateBuyer/:id" element={<RateForm/>}/>
+        
        {isLoggedIn && <Route path="/profile" element={<Profile/>}/>}
        {isLoggedIn && <Route path="/admin" element={<Admin/>}/>} 
        {isLoggedIn && <Route path="/products" element={<Products/>}/>}  
@@ -41,7 +43,9 @@ const App = () => {
        {isLoggedIn && <Route path="/updateProduct/:id" element={<UpdateProducts/>}/>}
        {isLoggedIn && <Route path="/updateUser/:id" element={<UpdateACC/>}/>}
        {isLoggedIn && <Route path="/updatePWD/:id" element={<UpdatePWD/>}/>}
-
+       {isLoggedIn && <Route path="/dummyPayment" element={<AddPayment/>}/>}
+       {isLoggedIn && <Route path="/rateBuyer/:id" element={<RateForm/>}/>}
+       {isLoggedIn && <Route path="/rateSeller/:sellerName/:id" element={<RateFormSeller/>}/>}
        <Route path="*" element={<h1>Page Not Found</h1>}/>
       </Routes>
       
