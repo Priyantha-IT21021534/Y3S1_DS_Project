@@ -76,9 +76,9 @@ const UpdatePWD = () => {
       <div className='forms' onSubmit={handleSubmit}>
       <h1>UPDATE YOUR PASSWORD</h1>
 <div className='inputs'>
-<h1>Name:{inputs.password}</h1>
+<h1></h1>
         <label>ENTER YOUR NEW PASSWORD:</label>
-        <input type="text" name='password' value={inputs.password} onChange={handleChange}/>
+        <input type="text" name='password' value = {inputs.pwd} onChange={handleChange}/>
         </div>
           
           <div className='inputs'>

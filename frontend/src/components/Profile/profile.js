@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 const Profile = () =>{
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const [products, setProducts] = useState([]);
 
   const navigate = useNavigate();
@@ -137,6 +137,8 @@ const Profile = () =>{
 <button className="btn btn-danger btn-small-width float-end" onClick={handleDeleteAcc}>DELETE ACC</button>
 <br/>
 <br/>
+
+{user.role==="seller" && (<div>
 <button className="btn btn-primary p-1 me-2" onClick={()=>navigate("/addProduct")}>ADD PRODUCT</button>
       <h2><center>MY PRODUCTS</center></h2>
       <table className="table">
@@ -175,7 +177,7 @@ const Profile = () =>{
       
       </table>
 
-      
+      </div>)}  
     </div>
 
   )
