@@ -7,7 +7,7 @@ const requireAccess  = require("../middlewares")
 
 router.post("/addProduct", requireAccess.requireAuth, requireAccess.requireRoleSeller, productController.addProduct);
 router.get("/getProducts", requireAccess.requireAuth, requireAccess.requireRoleBuyer, productController.getAllProducts);
-router.get("/getProduct/:id",requireAccess.requireAuth, requireAccess.requireRoleBuyer, productController.getById);
+router.get("/getProduct/:id",requireAccess.requireAuth, requireAccess.requireRoleBuyerOrSeller, productController.getById);
 router.put("/:sellerId/updateProduct/:id",requireAccess.requireAuth, requireAccess.requireRoleSeller, productController.updateProduct);
 router.delete("/deleteProduct/:id",requireAccess.requireAuth, requireAccess.requireRoleSeller, productController.deleteProduct);
 router.get("/search/", requireAccess.requireAuth, requireAccess.requireRoleBuyer, productController.getSearch)

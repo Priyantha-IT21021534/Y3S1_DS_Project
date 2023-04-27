@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import "../../assets/styles/cart.css";
 import axios from "axios";
 import StripeCheckout from "react-stripe-checkout";
+import { useNavigate } from 'react-router-dom'
 
 const KEY =
   "pk_test_51Moj0FA7YwNcizC88oNYnMH4OcCJvyfQSkTeiYWciqgdOfEPg5B74X0EEKSvFZD8dBog2ovsE6ZHpft5J8Avswah00Z0Ep11s4";
@@ -11,6 +12,8 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
 
   const [stripeToken, setStripeToken] = useState(null);
+    const navigate = useNavigate();
+
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -120,7 +123,11 @@ const Cart = () => {
         >
           <button type="submit">CheckOut</button>
         </StripeCheckout>
-      </form>
+      
+<button type="submit">CheckOut with Stripe</button>
+<button type="submit" onClick={()=>navigate('/dummyPayment')}>CheckOut with Dummy</button>
+
+</form>
     </div>
   );
 };
