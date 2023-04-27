@@ -56,9 +56,10 @@ const Products = () => {
       </form>
 
       <div className="home-products container">
-        {products.map((product, key) => (
+      <div className="product-tiles">
+      {products.map((product, key) => (
           
-          <div className="a_Product" key={key}>
+          <div className="product-tile" key={key}>
             
             <p>Image:{product.image}</p>
             <p>Name:{product.name}</p>
@@ -79,6 +80,8 @@ const Products = () => {
             <br />
           </div>
         ))}
+      </div>
+        
       </div>
     </div>
   );

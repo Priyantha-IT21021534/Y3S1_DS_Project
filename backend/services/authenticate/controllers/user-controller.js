@@ -25,10 +25,7 @@ const signUp = async (req, res, next) => {
     throw Error('All fields must be filled')
   }
 
-  //validate mobile number
-  if (!validator.isMobilePhone(mobile, 'en-SL')) {
-    throw Error('Mobile Numbe is not valid')
-  }
+  
   //checking wheather password is valid or not
   if (!validator.isEmail(email)) {
     throw Error('Email not valid')
@@ -75,7 +72,7 @@ const signUp = async (req, res, next) => {
           sameSite:"lax"
         })
 
-    res.status(201).json({ message: user, token })//sending the new user details with token as a message for the response
+    res.status(201).json({ message: "user succesfully registered", User:user, token })//sending the new user details with token as a message for the response
   } catch (err) {
     console.log(err);
     throw new Error('Error saving user');

@@ -1,53 +1,23 @@
-/* CSS for product tiles */
-
-
-.home-products {
+.product-tiles {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
 }
 
-.a_Product {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+.product-tile {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
   padding: 1rem;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.a_Product p {
-  margin: 0;
+.product-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
 }
 
-.a_Product button {
-  font-size: 1rem;
+.product-name {
   font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+  margin-bottom: 0.5rem;
 }
-
-.a_Product button.btn-info {
-  margin-top: 8px;
-  background-color: #007bff;
-  color: #fff;
-}
-
-.a_Product button.btn-success {
-  background-color: #28a745;
-  color: #fff;
-  margin-top: 8px;
-}
-
-.a_Product button:hover {
-  opacity: 0.8;
-}
-
-.form-control {
-  width: 300px;
-  margin-left: 33px;
-}
-
-
-

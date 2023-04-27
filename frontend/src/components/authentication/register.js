@@ -43,10 +43,25 @@ const Register = () => {
 
   }
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = async(e) =>{
     e.preventDefault();
-    console.log(inputs)
-    sendData().then(() => dispatch(authActions.login())).then(()=>navigate("/profile"))
+    try{
+      const response = await sendData();
+
+      console.log(response.User.role)
+
+      if (response.User.role === "admin") {
+        navigate("/admin");
+      } else if (response.User.role === "seller") {
+        navigate("/profile");
+      } else {
+        navigate("/products");
+      }
+
+      dispatch(authActions.login());
+    }catch(err){
+      console.log(err)
+    }
   }
 
   return (
@@ -81,7 +96,7 @@ const Register = () => {
         <div className='inputs'>
         <label>Choose your Role:</label>
 
-          <select name='select' value={inputs.role} onChange={handleChange}>
+          <select name='role' value={inputs.role} onChange={handleChange}>
             <option>Select the Role</option>
             <option value="buyer"> I am a buyer</option>
             <option value="seller">I am a seller</option>

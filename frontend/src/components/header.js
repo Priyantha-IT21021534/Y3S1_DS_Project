@@ -1,6 +1,6 @@
 import React , {useEffect, useState} from "react";
 import "../assets/styles/header.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { authActions } from "./Store";
@@ -12,6 +12,8 @@ const Header = () => {
   const quantity = useSelector((state) => state.cart.quantity);
 
   //console.log(cart)
+
+  const navigate = useNavigate();
 
 const [role, setRole] = useState('');  
 const dispatch = useDispatch();
@@ -26,6 +28,7 @@ const dispatch = useDispatch();
   };
   const handleLogout = () => {
     sendLogoutReq().then(() => dispatch(authActions.logout()));
+    
   };
 
           useEffect(() => {
@@ -67,7 +70,7 @@ const dispatch = useDispatch();
             )}
             <li className="header__item">
               {isLoggedIn && (
-                <Link onClick={handleLogout} className="logout" to="./">
+                <Link onClick={handleLogout} className="logout" to="./login">
                   Log Out
                 </Link>
               )}
