@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import "../../assets/styles/cart.css";
+import "../../assets/styles/cart.css?v1";
 import axios from "axios";
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from 'react-router-dom'
@@ -12,8 +12,51 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
 
   const [stripeToken, setStripeToken] = useState(null);
-    const navigate = useNavigate();
+  const [deliveryType, setDeliveryType] = useState();
 
+  const [address, setAddress] = useState("");
+  const [cheapDelivery, setCheapDelivery] = useState();
+  const [fastDelivery, setFastDelivery] = useState();
+  const [deliveryCharge, setDeliveryCharge] = useState();
+  const [finalTotal, setFinalTotal] = useState();
+  const [cheapDeliveryTime, setCheapDeliveryTime] = useState();
+  const [fastDeliveryTime, setFastDeliveryTime] = useState();
+  const [visibility, setVisibility] = useState(false);
+
+  const getDeliveryPrices = async () => {
+    console.log("function called");
+    const randomWeight = (Math.random() * 4.9) + 1.0;
+
+    const deliveryData = {
+      "shipfrom": "Colombo",
+      "shipto": address,
+      "weight": randomWeight
+    };
+
+    const deliveryResult = await axios.post("http://localhost:8300/delivery/rate", deliveryData);
+    console.log(deliveryResult.data);
+    setVisibility("block");
+
+    setCheapDelivery(deliveryResult.data.cheapDelivery.rate /10);
+    setFastDelivery(deliveryResult.data.fastDelivery.rate / 10);
+    setCheapDeliveryTime(deliveryResult.data.cheapDelivery.duration);
+    setFastDeliveryTime(deliveryResult.data.fastDelivery.duration);
+  };
+
+  const handleOptionChange = (event) => {
+    setDeliveryType(event.target.value);
+    setFinalTotal(cart.withCommision + deliveryCharge);
+    setDeliveryCharge(deliveryType == "fast" ? cheapDelivery: fastDelivery);
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    console.log(address);
+    console.log(deliveryCharge);
+    setFinalTotal(cart.withCommision);
+    console.log(finalTotal);
+  },[cheapDelivery, fastDelivery, address, deliveryCharge, finalTotal])
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -89,7 +132,38 @@ const Cart = () => {
             </tbody>
           ))}
           <tfoot>
-            <br></br><br></br>
+            <br />
+            <br />
+            <br />
+
+            <div class="input-group mb-3">
+              <input type="text" class="form-input" placeholder="Address" aria-label="Address" 
+                onChange={(e)=>setAddress(e.target.value)}
+              />
+              <button type="button" id="button-addon2" onClick={getDeliveryPrices} >Get Prices for Destination</button>
+            </div>
+
+            <div style={{ visibility: visibility ? "visible" : "hidden" }}>            
+            <div class="form-check" >
+              <input class="form-check-input" type="radio" name="delivery" id="fastDelivery" value="fast"
+                checked={deliveryType === "fast"}
+                onChange={handleOptionChange}
+               />
+              <label class="form-check-label" for="fastDelivery">
+                Fast Delivery: Rs.{fastDelivery}, {fastDeliveryTime} hrs
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="delivery" id="cheapDelivery" value="cheap" 
+                checked={deliveryType === "cheap"}
+                onChange={handleOptionChange}
+              />
+              <label class="form-check-label" for="cheapDelivery">
+                Cheap Delivery: Rs.{cheapDelivery}, {cheapDeliveryTime} days
+              </label>
+            </div>
+            </div>
+        <br />
             <h2>Order Summary</h2>
             <br></br>
             <tr>
@@ -101,6 +175,16 @@ const Cart = () => {
               <th className="cart-total">With Commission:</th>
               <td className="cart-total">
                 <strong>{cart.withCommision}</strong>
+              </td>
+
+              <th className="cart-total">Delivery Charges:</th>
+              <td className="cart-total">
+                <strong>{deliveryCharge}</strong>
+              </td>
+
+              <th className="cart-total">Total:</th>
+              <td className="cart-total">
+                <strong>{finalTotal}</strong>
               </td>
 
               <th className="cart-total">Item Count:</th>
@@ -123,10 +207,10 @@ const Cart = () => {
           token={onToken}
           stripeKey={KEY}
         >
-          <button type="submit">CheckOut</button>
+          <button type="submit">CheckOut with Strip</button>
         </StripeCheckout>
       
-<button type="submit">CheckOut with Stripe</button>
+{/* <button type="submit">CheckOut with Stripe</button> */}
 <button type="submit" onClick={()=>navigate('/dummyPayment')}>CheckOut with Dummy</button>
 
 </form>

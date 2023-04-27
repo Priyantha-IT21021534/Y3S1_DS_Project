@@ -10,7 +10,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 8300;
 
 //using dependencies
-app.use(cors());
+app.use(cors({credentials: true, origin: "http://localhost:3000"}));
 app.use(bodyParser.json());
 
 app.listen(PORT, () => {

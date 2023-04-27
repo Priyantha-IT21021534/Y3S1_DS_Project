@@ -19,7 +19,7 @@ const createToken = (_id, role, name) => {
 const signUp = async (req, res, next) => {
 
   const { name, mobile, email, address, password, role } = req.body;
-
+console.log(name, mobile, email, address, password, role)
   //validation for all the input fields
   if (!name || !mobile || !email || !address || !password) {
     throw Error('All fields must be filled')
