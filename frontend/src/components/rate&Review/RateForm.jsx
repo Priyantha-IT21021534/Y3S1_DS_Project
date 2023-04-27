@@ -81,12 +81,13 @@ const RateForm = () => {
           onChange={(value) => setRateValue(value)}
           size={50}
           activeColor="#ffd700"
-        /> <br />
+
+        /><h4>Add comment!</h4><br />
         <textarea 
           style={{height: '200px', width: "80%"}}
           onChange={(event) => setReview(event.target.value)}
         /> <br />
-        <button type="submit">Submit</button>
+        <button type="submit"  style={{ marginTop: '20px',  width: '200px',marginLeft: '50px',fontSize: '20px',  }}>Submit</button>
       </form>
     </div>
   );
