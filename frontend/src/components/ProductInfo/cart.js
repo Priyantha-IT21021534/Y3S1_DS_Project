@@ -109,6 +109,18 @@ const Cart = () => {
         <br />
         <br />
 
+        <StripeCheckout
+          name="Ayu Shop"
+          image
+          src="https://i.postimg.cc/d3qbx7SW/AyuLogo.png"
+          description={`Your total is Rs. ${cart.total}`}
+          amount={cart.total * 100}
+          token={onToken}
+          stripeKey={KEY}
+        >
+          <button type="submit">CheckOut</button>
+        </StripeCheckout>
+
         <button type="submit">CheckOut with Stripe</button>
         <button type="submit" onClick={() => navigate('/dummyPayment')}>CheckOut with Dummy</button>
       </form>
