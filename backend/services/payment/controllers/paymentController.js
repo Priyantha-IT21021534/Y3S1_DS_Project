@@ -60,6 +60,7 @@ const dummyCardPayment = async (req, res, next) => {
     console.error("amount not specified");
   }
 
+  console.log(email,mobile,card,amount)
   // check if price is a valid input
   if(error == null && !priceRegex.test(amount)){
     error = "invalidPrice";

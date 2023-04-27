@@ -25,7 +25,7 @@ export default function AddPayment() {
 
   const handleChangeText = (name, value) => {
     setPayemtns({ ...payments, [name]: value.target.value });
-    //console.log(payments);
+    console.log(payments);
   };
 
 const newPayment = {
@@ -40,6 +40,8 @@ const newPayment = {
   amount:payments.amount
 
 }
+
+
 
   const AddPayment = (e) => {
     e.preventDefault();
@@ -104,19 +106,19 @@ const newPayment = {
                 placeholder="eg:01/25(mm/yy)"   
                 title="expiration must be required"
                 required
-                onChange={(val) => handleChangeText("expirationt", val)}/>
+                onChange={(val) => handleChangeText("expiration", val)}/>
           </Form.Group>
         </Row> 
         <Row className="mb-3">
           <Form.Group as={Col}  controlId="formBasicCCV">
             <Form.Label>CVV</Form.Label>
             <Form.Control 
-                name="ccv"
+                name="cvv"
                 type="number" 
                 placeholder="CVV"   
                 title="Upload Date must be required"
                 required
-                onChange={(val) => handleChangeText("ccv", val)}/>
+                onChange={(val) => handleChangeText("cvv", val)}/>
             
           </Form.Group>
           <Form.Group as={Col} controlId="formBasicaName">
@@ -137,7 +139,7 @@ const newPayment = {
                 type="number" 
                 placeholder="Amount"   
                 title="Amount must be required"
-                />
+                onChange={(val) => handleChangeText("amount", val)}/>
       </Form.Group>  
 
           <Button variant="primary" type="submit">

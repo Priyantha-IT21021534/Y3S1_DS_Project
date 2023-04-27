@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import swal from 'sweetalert';
 import {useNavigate} from 'react-router-dom'
-import '../../assets/styles/Profile.css'
+import '../../assets/styles/profile.css'
 axios.defaults.withCredentials = true;
 
 const Profile = () =>{
