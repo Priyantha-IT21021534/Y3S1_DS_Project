@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react'
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import { addProduct } from '../Store';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams , useNavigate } from "react-router-dom";
+import { addProduct } from "../Store";
+import { useDispatch } from "react-redux";
+
 import "../../assets/styles/Productinfo.css";
 
 const Productinfo = () => {
@@ -10,8 +11,8 @@ const Productinfo = () => {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
 
-const navigate = useNavigate();  
-const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
 
   useEffect(() => {
     const getProduct = async () => {
@@ -48,7 +49,11 @@ const dispatch = useDispatch();
       <p>Price : {product.price}</p>
       <p>Weight : {product.weight}g</p>
       <p>{product.sellerName}</p>
-      Ratings : <>⭐⭐⭐</>
+      <button 
+        className='btn btn-info p-1 me-2 btn-small-width' 
+        onClick={()=>navigate(`/rateSeller/${product.sellerName}/${product.sellerId}`)}>
+          Rate This seller
+      </button>
 
       <div className="amount-container">
         <button className="remove-button" onClick={() => handleQuantity("dec")}>

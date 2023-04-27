@@ -1,8 +1,8 @@
-import React , {useEffect, useState} from 'react'
-import '../assets/styles/header.css'
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
+import React , {useEffect, useState} from "react";
+import "../assets/styles/header.css";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import { authActions } from "./Store";
 axios.defaults.withCredentials = true;
 
@@ -13,22 +13,20 @@ const Header = () => {
 
   //console.log(cart)
 
-    //console.log(cart)
-    const [role, setRole] = useState('')
-    const dispatch = useDispatch();
-    const sendLogoutReq = async()=>{
-
-        const res = await axios.post('http://localhost:8090/User/logout', null, {
-            withCredentials: true,
-        })//null means we don't have anything to add with this api
-        if (res.status === 200) {
-            return res;
-          }
-          return new Error("Unable To Logout. Please try again");
-        };
-        const handleLogout = () => {
-            sendLogoutReq().then(() => dispatch(authActions.logout()));
-          };
+const [role, setRole] = useState('');  
+const dispatch = useDispatch();
+  const sendLogoutReq = async () => {
+    const res = await axios.post("http://localhost:8090/User/logout", null, {
+      withCredentials: true,
+    }); //null means we don't have anything to add with this api
+    if (res.status === 200) {
+      return res;
+    }
+    return new Error("Unable To Logout. Please try again");
+  };
+  const handleLogout = () => {
+    sendLogoutReq().then(() => dispatch(authActions.logout()));
+  };
 
           useEffect(() => {
             const getProductById = () => {
@@ -74,19 +72,28 @@ const Header = () => {
                 </Link>
               )}
 
-     <Link to="./cart">{isLoggedIn && role === 'buyer' && <div><span className="badge bg-primary">{quantity}</span>
-     <i className="bi bi-cart-fill"></i></div>}</Link>
+              <Link to="./cart">
+                {isLoggedIn && role === 'buyer' &&(
+                  <div>
+                    <span className="badge bg-primary">{quantity}</span>
+                    <i className="bi bi-cart-fill"></i>
+                  </div>
+                )}
+              </Link>
 
-     {isLoggedIn && role === 'buyer' &&<Link className="orderHistory" to="./getOrders">Order Hisory</Link>}
-     <br/>
-     <span>{isLoggedIn && role === 'buyer' &&<Link to="./profile">Profile</Link>}</span>
-        
-          </li>
-        </ul>
-      </nav>
-    </header>
-  </div>
-  )
-}
+              {isLoggedIn && role === 'buyer' && (
+                <Link className="orderHistory" to="./getOrders">
+                  Order Hisory
+                </Link>
+              )}
+              <br />
+              <span>{isLoggedIn && role === 'buyer' && <Link to="./profile">Profile</Link>}</span>
+            </li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+  );
+};
 
 export default Header;
