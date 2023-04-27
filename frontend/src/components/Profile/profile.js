@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
-import swal from 'sweetalert';
-import {useNavigate} from 'react-router-dom'
-import '../../assets/styles/profile.css'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import swal from "sweetalert";
+import {useNavigate} from 'react-router-dom';
+import "../../assets/styles/Profile.css";
+
 axios.defaults.withCredentials = true;
 
-const Profile = () =>{
-
+const Profile = () => {
   const [user, setUser] = useState({});
   const [products, setProducts] = useState([]);
 
   const navigate = useNavigate();
 
-  const sendRequest = async() =>{
+  const sendRequest = async () => {
     const res = await axios.get("http://localhost:8090/User/profile", {
-      withCredentials:true
-    }).catch(err=>console.log(err));
+        withCredentials: true,
+      }).catch((err) => console.log(err));
 
     const data = await res.data;
     return data;
-  }
+  };
 
-
-
-  const sendProductRequest = async(sellerId) =>{
-    const res = await axios.get(`http://localhost:8070/products/${sellerId}/products`, {
-      withCredentials:true
-    }).catch(err=>console.log(err));
+  const sendProductRequest = async (sellerId) => {
+    const res = await axios
+      .get(`http://localhost:8070/products/${sellerId}/products`, {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(err));
 
     const data = await res.data;
     return data;
@@ -87,39 +87,39 @@ const Profile = () =>{
   }
 
   const handleDelete = (product_id) => {
-
-    swal({title: "Are you sure?",
-        text: "You want to delete this Product?",
-        icon: "warning",
-        dangerMode: true
-
-      }).then((willDelete)=>{
-
-        if(willDelete){
-          swal("Product is deleted", {
-            icon: "success",
-            buttons: false,
-            timer:2000,
-
-          })
-
-    axios.delete(`http://localhost:8070/products/deleteProduct/${product_id}`)
-
-    console.log(product_id)
-
-    const newProductlist = products.filter(product=>product._id !== product_id)
-
-    setProducts(newProductlist)
-
-  }else{
     swal({
-    text:"Your Products is saved!",
-    buttons: false,
-    timer:2000
-  });
-}
-})
-}
+      title: "Are you sure?",
+      text: "You want to delete this Product?",
+      icon: "warning",
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Product is deleted", {
+          icon: "success",
+          buttons: false,
+          timer: 2000,
+        });
+
+        axios.delete(
+          `http://localhost:8070/products/deleteProduct/${product_id}`
+        );
+
+        console.log(product_id);
+
+        const newProductlist = products.filter(
+          (product) => product._id !== product_id
+        );
+
+        setProducts(newProductlist);
+      } else {
+        swal({
+          text: "Your Products is saved!",
+          buttons: false,
+          timer: 2000,
+        });
+      }
+    });
+  };
 
   return (
     <div>{user &&(<div>
@@ -168,19 +168,17 @@ const Profile = () =>{
             <td><center>{myProduct.weight}</center></td>
             <th><center><button className="btn btn-info p-1 me-2" onClick={()=>navigate(`/updateProduct/${myProduct._id}`)}>Update</button>
               <button className="btn btn-danger p-1 me-2" onClick={()=>handleDelete(myProduct._id)}>Delete</button></center></th>
-          </tr>
-        ))}
-      </>)}
-
-
-</tbody>
-      
+          
+                </tr>
+              ))}
+            </>
+          )}
+        </tbody>
       </table>
 
       </div>)}  
     </div>
+  );
+};
 
-  )
-}
-
-export default Profile
+export default Profile;

@@ -21,9 +21,12 @@ getOrders()
 
 
   return (
-    <div>{orders.length>0 && orders.map((order, key)=>(
-        <div key={key}><h3>AMOUNT(Rs.) {order.amount}</h3>
-        <h3>Order Status {order.status}</h3>
+    <div style={{ marginTop: '20px',  width: '500px',marginLeft: '50px',fontSize: '20px',  }}>{orders.length>0 && orders.map((order, key)=>(
+        
+        <div>
+        
+        <div key={key}><h4>Amount: Rs.{order.amount}</h4>
+        <h4>Order Status : {order.status}</h4>
 
         <table>
         <thead>
@@ -41,7 +44,8 @@ getOrders()
 
            
         </table>
-        </div>))}
+        <br></br><br></br>
+        </div></div>))}
         </div>
   )
 }
