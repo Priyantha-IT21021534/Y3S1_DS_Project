@@ -109,7 +109,7 @@ const addProduct = async (req, res, next) => {
     try {
       product = new Products({
         sellerId:req.userId,//this id, we get it from token
-        sellerName:req.userName,
+        sellerName:req.sellerName,
         name, 
         brand, 
         price,

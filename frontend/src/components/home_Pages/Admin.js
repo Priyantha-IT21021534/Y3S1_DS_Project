@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 axios.defaults.withCredentials = true;
 const Admin = () => {
-
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
   useEffect(()=>{
@@ -36,7 +36,7 @@ const Admin = () => {
 
     <h1><center>Users</center></h1>
 
-    <button><Link to="./viewOrders">View Orders</Link></button>
+    <button className='btn btn-success' onClick={()=>navigate("./viewOrders")}>View ORders</button>
 
 <table className="table">
   <thead className="thead-dark">  

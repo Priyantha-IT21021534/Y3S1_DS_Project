@@ -114,7 +114,7 @@ const login = async (req, res, next) => {
     return res.status(400).json({ message: "Invalid email/password" })
   }
   //calling to createToken function to create a token for user
-  const token = createToken(loggeduser._id, loggeduser.role)
+  const token = createToken(loggeduser._id, loggeduser.role, loggeduser.name)
 
   //Create and setting a cookie with the user's ID and token
   res.cookie(String(loggeduser._id), token, {

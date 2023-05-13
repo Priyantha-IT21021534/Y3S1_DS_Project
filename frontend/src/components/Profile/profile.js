@@ -172,7 +172,7 @@ const Profile = () =>{
         </thead>
 
         <tbody>
-          {products.length > 0 && (
+          {products.length > 0 ? (
             <>
               {products.map((myProduct) => (
                 <tr key={myProduct._id}>
@@ -196,7 +196,7 @@ const Profile = () =>{
                   </td>
                   <th>
                     <center>
-                      <button className="btn btn-info p-1 me-2">Update</button>
+                      <button className="btn btn-info p-1 me-2" onClick={()=>navigate(`/updateProduct/${myProduct._id}`)}>Update</button>
                       <button
                         className="btn btn-danger p-1 me-2"
                         onClick={() => handleDelete(myProduct._id)}
@@ -208,10 +208,10 @@ const Profile = () =>{
                 </tr>
               ))}
             </>
-          )}
+          ):<h1><center>There is no any Products</center></h1>}
         </tbody>
       </table>
-      :<h1><center>There is no any Products</center></h1>
+      
       </div>)}  
     </div>
   );

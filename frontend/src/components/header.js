@@ -1,4 +1,4 @@
-import React , {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/styles/header.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,8 +15,8 @@ const Header = () => {
 
   const navigate = useNavigate();
 
-const [role, setRole] = useState('');  
-const dispatch = useDispatch();
+  const [role, setRole] = useState('');
+  const dispatch = useDispatch();
   const sendLogoutReq = async () => {
     const res = await axios.post("http://localhost:8090/User/logout", null, {
       withCredentials: true,
@@ -28,25 +28,26 @@ const dispatch = useDispatch();
   };
   const handleLogout = () => {
     sendLogoutReq().then(() => dispatch(authActions.logout()));
-    
+
   };
 
-          useEffect(() => {
-            const getProductById = () => {
-              axios
-              .get(`http://localhost:8090/User/profile`).then((res) => {
-                setRole(res.data.user.role);
-                console.log(res.data.user.role)
-                //console.log(res.data);
-              });
-            };
-            getProductById();
-          }, [isLoggedIn]);
-          console.log(role)
+  useEffect(() => {
+    const getProductById = () => {
+      axios
+        .get(`http://localhost:8090/User/profile`).then((res) => {
+          setRole(res.data.user.role);
+          console.log(res.data.user.role)
+          //console.log(res.data);
+        });
+    };
+    getProductById();
+  }, [isLoggedIn]);
+  console.log(role)
   return (
     <div>
       <header className="header">
-        <div className="header__logo">
+        <div className="header__logo" onClick={() => navigate(role === "buyer" ? "/products" : "/profile")}>
+
           <img src="https://i.postimg.cc/d3qbx7SW/AyuLogo.png" alt="Logo" />
           <h1 className="header__title">AyurHerb Store</h1>
         </div>
@@ -76,7 +77,7 @@ const dispatch = useDispatch();
               )}
 
               <Link to="./cart">
-                {isLoggedIn && role === 'buyer' &&(
+                {isLoggedIn && role === 'buyer' && (
                   <div>
                     <span className="badge bg-primary">{quantity}</span>
                     <i className="bi bi-cart-fill"></i>

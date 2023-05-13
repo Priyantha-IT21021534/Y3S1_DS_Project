@@ -47,7 +47,7 @@ const UpdateACC= () => {
       email:inputs.email,
       address:inputs.address
     }).then((err)=>{swal({
-        title: "Item updated!",
+        title: "User Account updated!",
     
         icon: "success",
         button: "OK" ,

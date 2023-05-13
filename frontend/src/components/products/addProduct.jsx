@@ -32,7 +32,7 @@ export default function AddProducts() {
       .post("http://localhost:8070/products/addProduct", products)
       .then(() => {
         swal.fire(`successfully added`);
-        navigate("/");
+        navigate("/profile");
       })
       .catch((error) => {
         console.log(error);
