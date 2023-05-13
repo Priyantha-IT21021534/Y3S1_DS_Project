@@ -2,8 +2,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const app = express();
 
+// using dependencies
+const app = express();
 require('dotenv').config();
 
 //declare port
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 8200;
 app.use(cors());
 app.use(bodyParser.json());
 
+// listening on port
 app.listen(PORT, () => {
 	console.log(`SMS Server is up and running on Port: ${PORT}`)
 });

@@ -41,7 +41,9 @@ const newPayment = {
 
 }
 
-
+  useState(()=>{
+    payments.amount=337.05;
+  })
 
   const AddPayment = (e) => {
     e.preventDefault();
@@ -139,6 +141,7 @@ const newPayment = {
                 type="number" 
                 placeholder="Amount"   
                 title="Amount must be required"
+                value="337.05"
                 onChange={(val) => handleChangeText("amount", val)}/>
       </Form.Group>  
 

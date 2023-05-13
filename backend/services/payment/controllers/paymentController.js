@@ -34,6 +34,8 @@ const dummyCardPayment = async (req, res, next) => {
     amount
   } = req.body;
 
+  console.log(email, mobile, card, amount);
+
   const cookie = req.headers.cookie;
 
   // validate email
